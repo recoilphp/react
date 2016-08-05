@@ -40,8 +40,8 @@ final class StrandWaitAll implements Awaitable, Listener
     /**
      * Send the result of a successful operation.
      *
-     * @param mixed    $value  The operation result.
-     * @param src|null $strand The strand that produced this result upon exit, if any.
+     * @param mixed       $value  The operation result.
+     * @param Strand|null $strand The strand that produced this result upon exit, if any.
      */
     public function send($value = null, Strand $strand = null)
     {

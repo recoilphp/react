@@ -52,11 +52,11 @@ final class ReactApi implements Api
      * @param KernelStrand $strand   The strand executing the API call.
      * @param float        $interval The interval to wait, in seconds.
      */
-    public function sleep(KernelStrand $strand, float $seconds)
+    public function sleep(KernelStrand $strand, float $interval)
     {
-        if ($seconds > 0) {
+        if ($interval > 0) {
             $timer = $this->eventLoop->addTimer(
-                $seconds,
+                $interval,
                 static function () use ($strand) {
                     $strand->send();
                 }
@@ -85,12 +85,12 @@ final class ReactApi implements Api
      * @param float        $timeout   The interval to allow for execution, in seconds.
      * @param mixed        $coroutine The coroutine to execute.
      */
-    public function timeout(KernelStrand $strand, float $seconds, $coroutine)
+    public function timeout(KernelStrand $strand, float $timeout, $coroutine)
     {
         $substrand = $strand->kernel()->execute($coroutine);
         assert($substrand instanceof KernelStrand);
 
-        (new StrandTimeout($this->eventLoop, $seconds, $substrand))->await($strand);
+        (new StrandTimeout($this->eventLoop, $timeout, $substrand))->await($strand);
     }
 
     /**
@@ -106,8 +106,8 @@ final class ReactApi implements Api
     public function read(
         KernelStrand $strand,
         $stream,
-        int $minLength = PHP_INT_MAX,
-        int $maxLength = PHP_INT_MAX
+        int $minLength,
+        int $maxLength
     ) {
         assert($minLength >= 1, 'minimum length must be at least one');
         assert($minLength <= $maxLength, 'minimum length must not exceed maximum length');
@@ -361,7 +361,7 @@ final class ReactApi implements Api
      *
      * The caller is resumed with the event loop used by this API.
      *
-     * @param Strand $strand The strand executing the API call.
+     * @param KernelStrand $strand The strand executing the API call.
      */
     public function eventLoop(KernelStrand $strand)
     {
