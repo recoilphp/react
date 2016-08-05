@@ -6,7 +6,6 @@ namespace Recoil;
 
 use Exception;
 use Generator;
-use Recoil\Kernel\Api;
 use Recoil\Kernel\Awaitable;
 use Recoil\Kernel\AwaitableProvider;
 use Recoil\Kernel\CoroutineProvider;
