@@ -368,7 +368,7 @@ describe(StrandTrait::class, function () {
                 ($this->initializeSubject)($fn);
                 $this->subject->get()->start();
 
-                $awaitable->await->calledWith($this->subject, $this->api);
+                $awaitable->await->calledWith($this->subject);
                 $fn->generated()->never()->received();
                 $fn->generated()->never()->receivedException();
             });
@@ -382,7 +382,7 @@ describe(StrandTrait::class, function () {
                 ($this->initializeSubject)($fn);
                 $this->subject->get()->start();
 
-                $awaitable->await->calledWith($this->subject, $this->api);
+                $awaitable->await->calledWith($this->subject);
                 $fn->generated()->never()->received();
                 $fn->generated()->never()->receivedException();
             });

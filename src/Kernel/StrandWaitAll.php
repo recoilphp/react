@@ -24,7 +24,7 @@ final class StrandWaitAll implements Awaitable, Listener
      *
      * @return null
      */
-    public function await(Listener $listener, Api $api)
+    public function await(Listener $listener)
     {
         if ($listener instanceof Strand) {
             $listener->setTerminator([$this, 'cancel']);

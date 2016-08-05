@@ -41,7 +41,7 @@ final class StrandTimeout implements Awaitable, Listener
      *
      * @return null
      */
-    public function await(Listener $listener, Api $api)
+    public function await(Listener $listener)
     {
         $this->timer = $this->eventLoop->addTimer(
             $this->timeout,

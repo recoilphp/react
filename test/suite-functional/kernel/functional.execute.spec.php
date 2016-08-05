@@ -71,7 +71,7 @@ it('accepts an awaitable provider', function () {
         {
             return new class() implements Awaitable
             {
-                public function await(Listener $listener, Api $api)
+                public function await(Listener $listener)
                 {
                     echo '<ok>';
                 }
@@ -87,7 +87,7 @@ it('accepts an awaitable provider', function () {
 it('accepts an awaitable', function () {
     $this->kernel->execute(new class() implements Awaitable
     {
-        public function await(Listener $listener, Api $api)
+        public function await(Listener $listener)
         {
             echo '<ok>';
         }

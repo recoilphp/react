@@ -204,9 +204,9 @@ trait StrandTrait
 
                     // An API call was made through the Recoil static facade ...
                     } elseif ($produced instanceof ApiCall) {
-                        $produced = $this->api->{$produced->name}(
+                        $produced = $this->api->{$produced->__name}(
                             $this,
-                            ...$produced->arguments
+                            ...$produced->__arguments
                         );
 
                         // The API call is implemented as a generator coroutine,
@@ -231,11 +231,11 @@ trait StrandTrait
 
                     // A generic awaitable object was yielded ...
                     } elseif ($produced instanceof Awaitable) {
-                        $produced->await($this, $this->api);
+                        $produced->await($this);
 
                     // An awaitable provider was yielded ...
                     } elseif ($produced instanceof AwaitableProvider) {
-                        $produced->awaitable()->await($this, $this->api);
+                        $produced->awaitable()->await($this);
 
                     // Some unidentified value was yielded, allow the API to
                     // dispatch the operation as it sees fit ...
@@ -513,7 +513,7 @@ trait StrandTrait
      *
      * @return null
      */
-    public function await(Listener $listener, Api $api)
+    public function await(Listener $listener)
     {
         if ($this->state === StrandState::EXITED) {
             $listener->{$this->action}($this->value, $this);

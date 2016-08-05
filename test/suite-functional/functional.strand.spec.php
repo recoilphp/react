@@ -53,7 +53,7 @@ rit('can invoke awaitable provider', function () {
         {
             return new class() implements Awaitable
             {
-                public function await(Listener $listener, Api $api)
+                public function await(Listener $listener)
                 {
                     $listener->send('<ok>');
                 }
@@ -67,7 +67,7 @@ rit('can invoke awaitable provider', function () {
 rit('can invoke awaitable', function () {
     $result = yield new class() implements Awaitable
     {
-        public function await(Listener $listener, Api $api)
+        public function await(Listener $listener)
         {
             $listener->send('<ok>');
         }
@@ -84,7 +84,7 @@ rit('prefers await() to awaitable()', function () {
             expect(false)->to->be->ok('awaitable() was called');
         }
 
-        public function await(Listener $listener, Api $api)
+        public function await(Listener $listener)
         {
             $listener->send('<ok>');
         }

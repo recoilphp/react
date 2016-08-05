@@ -288,7 +288,7 @@ trait ApiTrait
             $substrands[] = $kernel->execute($coroutine);
         }
 
-        (new StrandWaitAll(...$substrands))->await($strand, $this);
+        (new StrandWaitAll(...$substrands))->await($strand);
     }
 
     /**
@@ -313,7 +313,7 @@ trait ApiTrait
             $substrands[] = $kernel->execute($coroutine);
         }
 
-        (new StrandWaitAny(...$substrands))->await($strand, $this);
+        (new StrandWaitAny(...$substrands))->await($strand);
     }
 
     /**
@@ -369,7 +369,7 @@ trait ApiTrait
             $substrands[] = $kernel->execute($coroutine);
         }
 
-        (new StrandWaitSome($count, ...$substrands))->await($strand, $this);
+        (new StrandWaitSome($count, ...$substrands))->await($strand);
     }
 
     /**
@@ -392,7 +392,7 @@ trait ApiTrait
             $substrands[] = $kernel->execute($coroutine);
         }
 
-        (new StrandWaitFirst(...$substrands))->await($strand, $this);
+        (new StrandWaitFirst(...$substrands))->await($strand);
     }
 
     /**

@@ -87,7 +87,7 @@ final class ReactApi implements Api
     {
         $substrand = $strand->kernel()->execute($coroutine);
 
-        (new StrandTimeout($this->eventLoop, $seconds, $substrand))->await($strand, $this);
+        (new StrandTimeout($this->eventLoop, $seconds, $substrand))->await($strand);
     }
 
     /**

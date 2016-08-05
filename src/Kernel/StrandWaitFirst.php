@@ -22,7 +22,7 @@ final class StrandWaitFirst implements Awaitable, Listener
      * @param Listener $listener The object to resume when the work is complete.
      * @param Api      $api      The API implementation for the current kernel.
      */
-    public function await(Listener $listener, Api $api)
+    public function await(Listener $listener)
     {
         if ($listener instanceof Strand) {
             $listener->setTerminator([$this, 'cancel']);
