@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0e455cf7f4b9414e065ab25969fdff28",
-    "content-hash": "a7ea1cafe496f5cead3380316a0b3bb7",
+    "hash": "d0374e2df64b21260fd7642cc93bc6e5",
+    "content-hash": "8ae42d82e1d6b4664a9221e981beb09b",
     "packages": [
         {
             "name": "icecave/repr",
@@ -145,21 +145,78 @@
             ],
             "description": "A lightweight implementation of CommonJS Promises/A for PHP",
             "time": "2016-05-03 17:50:52"
+        },
+        {
+            "name": "recoil/api",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/recoilphp/api.git",
+                "reference": "ca579d1846b9c1cb995c2ac039d6ba1079bd6862"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/recoilphp/api/zipball/ca579d1846b9c1cb995c2ac039d6ba1079bd6862",
+                "reference": "ca579d1846b9c1cb995c2ac039d6ba1079bd6862",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7"
+            },
+            "require-dev": {
+                "eloquent/phony": "^0.13",
+                "friendsofphp/php-cs-fixer": "^1",
+                "peridot-php/leo": "^1",
+                "peridot-php/peridot": "^1",
+                "peridot-php/peridot-code-coverage-reporters": "^2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Recoil\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Harris",
+                    "email": "james.harris@icecave.com.au",
+                    "homepage": "https://github.com/jmalloc"
+                }
+            ],
+            "description": "Recoil API specification and interfaces.",
+            "homepage": "https://github.com/recoilphp/api",
+            "keywords": [
+                "Thread",
+                "async",
+                "asynchronous",
+                "continuation",
+                "coroutine",
+                "event",
+                "generator",
+                "green",
+                "multitasking",
+                "react"
+            ],
+            "time": "2016-08-05 03:31:10"
         }
     ],
     "packages-dev": [
         {
             "name": "eloquent/phony",
-            "version": "0.13.0",
+            "version": "0.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/eloquent/phony.git",
-                "reference": "ea774976ab2764c5dcb5f10c84090aa63af52b29"
+                "reference": "81eeba86429314cff2dc0ace171ef3258890d492"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eloquent/phony/zipball/ea774976ab2764c5dcb5f10c84090aa63af52b29",
-                "reference": "ea774976ab2764c5dcb5f10c84090aa63af52b29",
+                "url": "https://api.github.com/repos/eloquent/phony/zipball/81eeba86429314cff2dc0ace171ef3258890d492",
+                "reference": "81eeba86429314cff2dc0ace171ef3258890d492",
                 "shasum": ""
             },
             "require": {
@@ -169,12 +226,12 @@
                 "athletic/athletic": "^0.1",
                 "counterpart/counterpart": "^1",
                 "danielstjules/pho": "^1",
+                "eloquent/asplode": "^2",
                 "ext-pdo": "*",
-                "friendsofphp/php-cs-fixer": "^1",
+                "friendsofphp/php-cs-fixer": "1.11.4",
                 "hamcrest/hamcrest-php": "^2",
                 "icecave/isolator": "^3",
                 "icecave/semver": "^3",
-                "icecave/woodhouse": "dev-symlinks",
                 "mockery/mockery": "^0.9",
                 "peridot-php/leo": "^1",
                 "peridot-php/peridot": "^1",
@@ -221,7 +278,7 @@
                 "stubbing",
                 "test"
             ],
-            "time": "2016-07-15 00:20:07"
+            "time": "2016-08-04 23:21:21"
         },
         {
             "name": "evenement/evenement",
@@ -843,30 +900,25 @@
         },
         {
             "name": "react/dns",
-            "version": "v0.4.2",
+            "version": "v0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/dns.git",
-                "reference": "62f6201e487df8add209cc42f05ffca33ee1ba05"
+                "reference": "751b3129556e04944f164e3556a20ca6e201e459"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/dns/zipball/62f6201e487df8add209cc42f05ffca33ee1ba05",
-                "reference": "62f6201e487df8add209cc42f05ffca33ee1ba05",
+                "url": "https://api.github.com/repos/reactphp/dns/zipball/751b3129556e04944f164e3556a20ca6e201e459",
+                "reference": "751b3129556e04944f164e3556a20ca6e201e459",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
                 "react/cache": "~0.4.0|~0.3.0",
-                "react/promise": "~2.0|~1.1",
+                "react/promise": "~2.1|~1.2",
                 "react/socket": "~0.4.0|~0.3.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.4-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "React\\Dns\\": "src"
@@ -881,7 +933,7 @@
                 "dns",
                 "dns-resolver"
             ],
-            "time": "2016-02-24 23:45:36"
+            "time": "2016-08-01 10:09:07"
         },
         {
             "name": "react/socket",
@@ -1111,16 +1163,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.1.2",
+            "version": "v3.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "747154aa69b0f83cd02fc9aa554836dee417631a"
+                "reference": "f9e638e8149e9e41b570ff092f8007c477ef0ce5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/747154aa69b0f83cd02fc9aa554836dee417631a",
-                "reference": "747154aa69b0f83cd02fc9aa554836dee417631a",
+                "url": "https://api.github.com/repos/symfony/console/zipball/f9e638e8149e9e41b570ff092f8007c477ef0ce5",
+                "reference": "f9e638e8149e9e41b570ff092f8007c477ef0ce5",
                 "shasum": ""
             },
             "require": {
@@ -1167,20 +1219,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29 07:02:31"
+            "time": "2016-07-26 08:04:17"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v3.1.2",
+            "version": "v3.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "7f9839ede2070f53e7e2f0849b9bd14748c434c5"
+                "reference": "c0c00c80b3a69132c4e55c3e7db32b4a387615e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/7f9839ede2070f53e7e2f0849b9bd14748c434c5",
-                "reference": "7f9839ede2070f53e7e2f0849b9bd14748c434c5",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/c0c00c80b3a69132c4e55c3e7db32b4a387615e5",
+                "reference": "c0c00c80b3a69132c4e55c3e7db32b4a387615e5",
                 "shasum": ""
             },
             "require": {
@@ -1227,20 +1279,20 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29 05:41:56"
+            "time": "2016-07-19 10:45:57"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.1.2",
+            "version": "v3.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "322da5f0910d8aa0b25fa65ffccaba68dbddb890"
+                "reference": "bb29adceb552d202b6416ede373529338136e84f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/322da5f0910d8aa0b25fa65ffccaba68dbddb890",
-                "reference": "322da5f0910d8aa0b25fa65ffccaba68dbddb890",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/bb29adceb552d202b6416ede373529338136e84f",
+                "reference": "bb29adceb552d202b6416ede373529338136e84f",
                 "shasum": ""
             },
             "require": {
@@ -1276,11 +1328,11 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29 05:41:56"
+            "time": "2016-07-20 05:44:26"
         },
         {
             "name": "symfony/finder",
-            "version": "v3.1.2",
+            "version": "v3.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
@@ -1388,16 +1440,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.1.2",
+            "version": "v3.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "5c11a1a4d4016662eeaf0f8757958c7de069f9a0"
+                "reference": "04c2dfaae4ec56a5c677b0c69fac34637d815758"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/5c11a1a4d4016662eeaf0f8757958c7de069f9a0",
-                "reference": "5c11a1a4d4016662eeaf0f8757958c7de069f9a0",
+                "url": "https://api.github.com/repos/symfony/process/zipball/04c2dfaae4ec56a5c677b0c69fac34637d815758",
+                "reference": "04c2dfaae4ec56a5c677b0c69fac34637d815758",
                 "shasum": ""
             },
             "require": {
@@ -1433,11 +1485,11 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29 05:42:25"
+            "time": "2016-07-28 11:13:48"
         },
         {
             "name": "symfony/stopwatch",
-            "version": "v3.1.2",
+            "version": "v3.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stopwatch.git",
@@ -1487,7 +1539,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "recoil/api": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

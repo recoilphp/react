@@ -1,11 +1,12 @@
 {
     "name": "recoil/recoil",
-    "description": "A generator-based cooperative multitasking kernel for React.",
+    "description": "Asynchronous coroutines for PHP 7.",
     "require": {
         "php": "^7",
         "icecave/repr": "^1",
         "react/event-loop": "^0.4",
-        "react/promise": "^2"
+        "react/promise": "^2",
+        "recoil/api": "dev-master"
     },
     "require-dev": {
         "ext-posix": "*",
