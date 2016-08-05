@@ -8,10 +8,11 @@ use React\Promise\Deferred;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromisorInterface;
 use Recoil\Kernel\Awaitable;
+use Recoil\Kernel\KernelStrand;
 use Recoil\Kernel\Strand;
 use Recoil\Kernel\StrandTrait;
 
-final class ReactStrand implements Strand, Awaitable, PromisorInterface
+final class ReactStrand implements KernelStrand, Awaitable, PromisorInterface
 {
     /**
      * Capture the result of the strand, supressing the default error handling

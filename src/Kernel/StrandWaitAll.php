@@ -11,7 +11,7 @@ use Throwable;
  */
 final class StrandWaitAll implements Awaitable, Listener
 {
-    public function __construct(Strand ...$substrands)
+    public function __construct(KernelStrand ...$substrands)
     {
         $this->substrands = $substrands;
     }
@@ -26,7 +26,7 @@ final class StrandWaitAll implements Awaitable, Listener
      */
     public function await(Listener $listener)
     {
-        if ($listener instanceof Strand) {
+        if ($listener instanceof KernelStrand) {
             $listener->setTerminator([$this, 'cancel']);
         }
 
@@ -40,8 +40,8 @@ final class StrandWaitAll implements Awaitable, Listener
     /**
      * Send the result of a successful operation.
      *
-     * @param mixed       $value  The operation result.
-     * @param Strand|null $strand The strand that produced this result upon exit, if any.
+     * @param mixed    $value  The operation result.
+     * @param src|null $strand The strand that produced this result upon exit, if any.
      */
     public function send($value = null, Strand $strand = null)
     {
@@ -97,7 +97,7 @@ final class StrandWaitAll implements Awaitable, Listener
     private $listener;
 
     /**
-     * @var array<Strand> The strands to wait for.
+     * @var array<KernelStrand> The strands to wait for.
      */
     private $substrands;
 

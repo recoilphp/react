@@ -12,7 +12,7 @@ use Throwable;
  */
 final class StrandWaitAny implements Awaitable, Listener
 {
-    public function __construct(Strand ...$substrands)
+    public function __construct(KernelStrand ...$substrands)
     {
         $this->substrands = $substrands;
     }
@@ -27,7 +27,7 @@ final class StrandWaitAny implements Awaitable, Listener
      */
     public function await(Listener $listener)
     {
-        if ($listener instanceof Strand) {
+        if ($listener instanceof KernelStrand) {
             $listener->setTerminator([$this, 'cancel']);
         }
 
@@ -100,7 +100,7 @@ final class StrandWaitAny implements Awaitable, Listener
     private $listener;
 
     /**
-     * @var array<Strand> The strands to wait for.
+     * @var array<KernelStrand> The strands to wait for.
      */
     private $substrands;
 

@@ -9,6 +9,7 @@ use React\EventLoop\LoopInterface;
 use Recoil\Exception\TimeoutException;
 use Recoil\Kernel\Api;
 use Recoil\Kernel\ApiTrait;
+use Recoil\Kernel\KernelStrand;
 use Recoil\Kernel\Strand;
 
 /**
@@ -28,11 +29,13 @@ final class ReactApi implements Api
     }
 
     /**
-     * Allow other strands to execute before resuming the calling strand.
+     * Force the current strand to cooperate.
      *
-     * @param Strand $strand The strand executing the API call.
+     * @see Recoil::cooperate() for the full specification.
+     *
+     * @param KernelStrand $strand The strand executing the API call.
      */
-    public function cooperate(Strand $strand)
+    public function cooperate(KernelStrand $strand)
     {
         $this->eventLoop->futureTick(
             static function () use ($strand) {
@@ -42,12 +45,14 @@ final class ReactApi implements Api
     }
 
     /**
-     * Suspend the calling strand for a fixed interval.
+     * Suspend the current strand for a fixed interval.
      *
-     * @param Strand $strand  The strand executing the API call.
-     * @param float  $seconds The interval to wait.
+     * @see Recoil::sleep() for the full specification.
+     *
+     * @param KernelStrand $strand   The strand executing the API call.
+     * @param float        $interval The interval to wait, in seconds.
      */
-    public function sleep(Strand $strand, float $seconds)
+    public function sleep(KernelStrand $strand, float $seconds)
     {
         if ($seconds > 0) {
             $timer = $this->eventLoop->addTimer(
@@ -72,51 +77,34 @@ final class ReactApi implements Api
     }
 
     /**
-     * Execute a coroutine on a new strand that is terminated after a timeout.
+     * Execute a coroutine with a cap on execution time.
      *
-     * If the strand does not exit within the specified time it is terminated
-     * and the calling strand is resumed with a {@see TimeoutException}.
-     * Otherwise, it is resumed with the value or exception produced by the
-     * coroutine.
+     * @see Recoil::timeout() for the full specification.
      *
-     * @param Strand $strand    The strand executing the API call.
-     * @param float  $seconds   The interval to allow for execution.
-     * @param mixed  $coroutine The coroutine to execute.
+     * @param KernelStrand $strand    The strand executing the API call.
+     * @param float        $timeout   The interval to allow for execution, in seconds.
+     * @param mixed        $coroutine The coroutine to execute.
      */
-    public function timeout(Strand $strand, float $seconds, $coroutine)
+    public function timeout(KernelStrand $strand, float $seconds, $coroutine)
     {
         $substrand = $strand->kernel()->execute($coroutine);
+        assert($substrand instanceof KernelStrand);
 
         (new StrandTimeout($this->eventLoop, $seconds, $substrand))->await($strand);
     }
 
     /**
-     * Read data from a stream resource, blocking until a specified amount of
-     * data is available.
+     * Read data from a stream.
      *
-     * Data is buffered until it's length falls between $minLength and
-     * $maxLength, or the stream reaches EOF. The calling strand is resumed with
-     * a string containing the buffered data.
+     * @see Recoil::read() for the full specification.
      *
-     * $minLength and $maxLength may be equal to fill a fixed-size buffer.
-     *
-     * If the stream is already being read by another strand, no data is
-     * read until the other strand's operation is complete.
-     *
-     * Similarly, for the duration of the read, calls to {@see Api::select()}
-     * will not indicate that the stream is ready for reading.
-     *
-     * It is assumed that the stream is already configured as non-blocking.
-     *
-     * @param Strand   $strand    The strand executing the API call.
-     * @param resource $stream    A readable stream resource.
-     * @param int      $minLength The minimum number of bytes to read.
-     * @param int      $maxLength The maximum number of bytes to read.
-     *
-     * @return null
+     * @param KernelStrand $strand    The strand executing the API call.
+     * @param resource     $stream    A readable stream resource.
+     * @param int          $minLength The minimum number of bytes to read.
+     * @param int          $maxLength The maximum number of bytes to read.
      */
     public function read(
-        Strand $strand,
+        KernelStrand $strand,
         $stream,
         int $minLength = PHP_INT_MAX,
         int $maxLength = PHP_INT_MAX
@@ -178,29 +166,17 @@ final class ReactApi implements Api
     }
 
     /**
-     * Write data to a stream resource, blocking the strand until the entire
-     * buffer has been written.
+     * Write data to a stream.
      *
-     * Data is written until $length bytes have been written, or the entire
-     * buffer has been sent, at which point the calling strand is resumed.
+     * @see Recoil::write() for the full specification.
      *
-     * If the stream is already being written to by another strand, no data is
-     * written until the other strand's operation is complete.
-     *
-     * Similarly, for the duration of the write, calls to {@see Api::select()}
-     * will not indicate that the stream is ready for writing.
-     *
-     * It is assumed that the stream is already configured as non-blocking.
-     *
-     * @param Strand   $strand The strand executing the API call.
-     * @param resource $stream A writable stream resource.
-     * @param string   $buffer The data to write to the stream.
-     * @param int      $length The maximum number of bytes to write.
-     *
-     * @return null
+     * @param KernelStrand $strand The strand executing the API call.
+     * @param resource     $stream A writable stream resource.
+     * @param string       $buffer The data to write to the stream.
+     * @param int          $length The maximum number of bytes to write.
      */
     public function write(
-        Strand $strand,
+        KernelStrand $strand,
         $stream,
         string $buffer,
         int $length = PHP_INT_MAX
@@ -253,6 +229,9 @@ final class ReactApi implements Api
      * Monitor multiple streams, waiting until one or more becomes "ready" for
      * reading or writing.
      *
+     * This is operation is COOPERATIVE.
+     * This operation is NON-STANDARD.
+     *
      * This operation is directly analogous to {@see stream_select()}, except
      * that it allows other strands to execute while waiting for the streams.
      *
@@ -284,7 +263,7 @@ final class ReactApi implements Api
      * @return null
      */
     public function select(
-        Strand $strand,
+        KernelStrand $strand,
         array $read = null,
         array $write = null,
         float $timeout = null
@@ -377,11 +356,14 @@ final class ReactApi implements Api
     /**
      * Get the event loop.
      *
+     * This is operation is NON-COOPERATIVE.
+     * This operation is NON-STANDARD.
+     *
      * The caller is resumed with the event loop used by this API.
      *
      * @param Strand $strand The strand executing the API call.
      */
-    public function eventLoop(Strand $strand)
+    public function eventLoop(KernelStrand $strand)
     {
         $strand->send($this->eventLoop);
     }

@@ -12,7 +12,7 @@ use Throwable;
  */
 final class StrandWaitSome implements Awaitable, Listener
 {
-    public function __construct(int $count, Strand ...$substrands)
+    public function __construct(int $count, KernelStrand ...$substrands)
     {
         assert($count >= 1);
         assert($count <= \count($substrands));
@@ -43,7 +43,7 @@ final class StrandWaitSome implements Awaitable, Listener
      */
     public function await(Listener $listener)
     {
-        if ($listener instanceof Strand) {
+        if ($listener instanceof KernelStrand) {
             $listener->setTerminator([$this, 'cancel']);
         }
 
@@ -130,7 +130,7 @@ final class StrandWaitSome implements Awaitable, Listener
     private $count;
 
     /**
-     * @var array<Strand> The strands to wait for.
+     * @var array<KernelStrand> The strands to wait for.
      */
     private $substrands;
 

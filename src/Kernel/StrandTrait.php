@@ -7,6 +7,7 @@ namespace Recoil\Kernel;
 use Closure;
 use Generator;
 use InvalidArgumentException;
+use Recoil\ApiCall;
 use Recoil\Exception\TerminatedException;
 use Recoil\Kernel\Exception\PrimaryListenerRemovedException;
 use Recoil\Kernel\Exception\StrandListenerException;
@@ -14,7 +15,7 @@ use SplObjectStorage;
 use Throwable;
 
 /**
- * The standard strand implementation.
+ * The standard {@see KernelStrand} implementation.
  */
 trait StrandTrait
 {
@@ -240,7 +241,7 @@ trait StrandTrait
                     // Some unidentified value was yielded, allow the API to
                     // dispatch the operation as it sees fit ...
                     } else {
-                        $this->api->dispatch(
+                        $this->api->__dispatch(
                             $this,
                             $this->current->key(),
                             $produced
@@ -529,7 +530,7 @@ trait StrandTrait
      *
      * @return null
      */
-    public function link(Strand $strand)
+    public function link(KernelStrand $strand)
     {
         if ($this->linkedStrands === null) {
             $this->linkedStrands = new SplObjectStorage();
@@ -543,7 +544,7 @@ trait StrandTrait
      *
      * @return null
      */
-    public function unlink(Strand $strand)
+    public function unlink(KernelStrand $strand)
     {
         if ($this->linkedStrands !== null) {
             $this->linkedStrands->detach($strand);

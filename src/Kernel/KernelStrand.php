@@ -57,12 +57,12 @@ interface KernelStrand extends Strand
      *
      * @return null
      */
-    public function link(Strand $strand);
+    public function link(KernelStrand $strand);
 
     /**
      * Break a previously created uni-directional link to another strand.
      *
      * @return null
      */
-    public function unlink(Strand $strand);
+    public function unlink(KernelStrand $strand);
 }

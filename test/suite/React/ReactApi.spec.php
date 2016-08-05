@@ -9,6 +9,7 @@ use Hamcrest\Core\IsInstanceOf;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\Timer\TimerInterface;
 use Recoil\Kernel\Kernel;
+use Recoil\Kernel\KernelStrand;
 use Recoil\Kernel\Strand;
 
 describe(ReactApi::class, function () {
@@ -20,10 +21,10 @@ describe(ReactApi::class, function () {
 
         $this->kernel = Phony::mock(Kernel::class);
 
-        $this->strand = Phony::mock(Strand::class);
+        $this->strand = Phony::mock(KernelStrand::class);
         $this->strand->kernel->returns($this->kernel);
 
-        $this->substrand = Phony::mock(Strand::class);
+        $this->substrand = Phony::mock(KernelStrand::class);
         $this->kernel->execute->returns($this->substrand);
 
         $this->subject = new ReactApi($this->eventLoop->get());

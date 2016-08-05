@@ -9,6 +9,7 @@ use Exception;
 use Generator;
 use Hamcrest\Core\IsInstanceOf;
 use InvalidArgumentException;
+use Recoil\ApiCall;
 use Recoil\Exception\TerminatedException;
 use Recoil\Kernel\Exception\PrimaryListenerRemovedException;
 use Recoil\Kernel\Exception\StrandListenerException;
@@ -20,11 +21,10 @@ describe(StrandTrait::class, function () {
         $this->kernel = Phony::mock(Kernel::class);
         $this->api = Phony::mock(Api::class);
         $this->trace = Phony::mock(StrandTrace::class);
-        $this->trace->yield->returnsArgument(2);
 
         $this->initializeSubject = function ($entryPoint = null) {
             $this->subject = Phony::partialMock(
-                [Strand::class, Awaitable::class, StrandTrait::class],
+                [KernelStrand::class, Awaitable::class, StrandTrait::class],
                 [
                     $this->kernel->get(),
                     $this->api->get(),
@@ -43,8 +43,8 @@ describe(StrandTrait::class, function () {
         $this->listener1 = Phony::mock(Listener::class);
         $this->listener2 = Phony::mock(Listener::class);
 
-        $this->strand1 = Phony::mock(Strand::class);
-        $this->strand2 = Phony::mock(Strand::class);
+        $this->strand1 = Phony::mock(KernelStrand::class);
+        $this->strand2 = Phony::mock(KernelStrand::class);
     });
 
     afterEach(function () {
@@ -59,7 +59,7 @@ describe(StrandTrait::class, function () {
             ($this->initializeSubject)($fn());
             $this->subject->get()->start();
 
-            $this->api->dispatch->calledWith($this->subject, '<key>', '<value>');
+            $this->api->__dispatch->calledWith($this->subject, '<key>', '<value>');
             $fn->generated()->never()->received();
             $fn->generated()->never()->receivedException();
         });
@@ -70,7 +70,7 @@ describe(StrandTrait::class, function () {
             ($this->initializeSubject)($fn);
             $this->subject->get()->start();
 
-            $this->api->dispatch->calledWith($this->subject, '<key>', '<value>');
+            $this->api->__dispatch->calledWith($this->subject, '<key>', '<value>');
             $fn->generated()->never()->received();
             $fn->generated()->never()->receivedException();
         });
@@ -81,7 +81,7 @@ describe(StrandTrait::class, function () {
             ($this->initializeSubject)($provider->get());
             $this->subject->get()->start();
 
-            $this->api->dispatch->calledWith($this->subject, '<key>', '<value>');
+            $this->api->__dispatch->calledWith($this->subject, '<key>', '<value>');
         });
 
         it('throws when passed a regular function', function () {
@@ -96,7 +96,7 @@ describe(StrandTrait::class, function () {
         it('dispatches other types via the kernel api', function () {
             ($this->initializeSubject)('<value>');
             $this->subject->get()->start();
-            $this->api->dispatch->calledWith($this->subject, 0, '<value>');
+            $this->api->__dispatch->calledWith($this->subject, 0, '<value>');
         });
     });
 
@@ -342,7 +342,7 @@ describe(StrandTrait::class, function () {
 
             it('dispatches kernel api calls', function () {
                 $fn = Phony::stub();
-                $fn->generates([new ApiCall('<name>', [1, 2, 3])]);
+                $fn->generates([new ApiCall('<name>', 1, 2, 3)]);
                 ($this->initializeSubject)($fn);
                 $this->subject->get()->start();
 
@@ -354,7 +354,7 @@ describe(StrandTrait::class, function () {
             it('dispatches kernel api calls implemented as coroutines', function () {
                 $this->api->{'<name>'}->generates()->returns('<result>');
                 $fn = Phony::stub();
-                $fn->generates([new ApiCall('<name>', [1, 2, 3])]);
+                $fn->generates([new ApiCall('<name>', 1, 2, 3)]);
                 ($this->initializeSubject)($fn);
                 $this->subject->get()->start();
 
@@ -393,12 +393,12 @@ describe(StrandTrait::class, function () {
                 );
                 $this->subject->get()->start();
 
-                $this->api->dispatch->calledWith($this->subject, 0, '<value>');
+                $this->api->__dispatch->calledWith($this->subject, 0, '<value>');
             });
 
             it('propagates exceptions thrown during handling of the yielded value', function () {
                 $exception = Phony::mock(Throwable::class);
-                $this->api->dispatch->throws($exception);
+                $this->api->__dispatch->throws($exception);
                 $fn = Phony::stub()->generates([null])->returns();
                 ($this->initializeSubject)($fn);
                 $this->subject->get()->start();
@@ -422,7 +422,7 @@ describe(StrandTrait::class, function () {
         it('can be invoked from inside ->start()', function () {
             $fn = Phony::stub();
             $fn->generates([null]);
-            $this->api->dispatch->does(function () {
+            $this->api->__dispatch->does(function () {
                 $this->subject->get()->send('<result>');
             });
             ($this->initializeSubject)($fn);
@@ -448,7 +448,7 @@ describe(StrandTrait::class, function () {
             $fn = Phony::stub();
             $fn->generates([null]);
             $exception = Phony::mock(Throwable::class);
-            $this->api->dispatch->does(function () use ($exception) {
+            $this->api->__dispatch->does(function () use ($exception) {
                 $this->subject->get()->throw($exception->get());
             });
             ($this->initializeSubject)($fn);
@@ -819,7 +819,7 @@ describe(StrandTrait::class, function () {
                 });
 
                 it('traces strand termination', function () {
-                    $this->api->dispatch->does(function () {
+                    $this->api->__dispatch->does(function () {
                         $this->subject->get()->terminate();
                     });
                     $fn = function () { yield; };

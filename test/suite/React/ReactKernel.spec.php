@@ -89,7 +89,7 @@ describe(ReactKernel::class, function () {
 
             $fn();
 
-            $this->api->dispatch->calledWith(
+            $this->api->__dispatch->calledWith(
                 $strand,
                 0,
                 '<coroutine>'
