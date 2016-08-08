@@ -5,18 +5,18 @@ declare (strict_types = 1); // @codeCoverageIgnore
 namespace Recoil\Kernel;
 
 use Recoil\Kernel\Exception\PrimaryListenerRemovedException;
+use Recoil\Listener;
+use Recoil\Strand;
 
 /**
- * A low-level strand interface for use by the kernel.
+ * A low-level strand interface for use within the kernel.
  */
-interface KernelStrand extends Strand
+interface SystemStrand extends Strand
 {
     /**
-     * Start the strand.
-     *
-     * @return null
+     * Get the kernel that the strand is running on.
      */
-    public function start();
+    public function kernel() : SystemKernel;
 
     /**
      * Set the primary listener.
@@ -57,12 +57,12 @@ interface KernelStrand extends Strand
      *
      * @return null
      */
-    public function link(KernelStrand $strand);
+    public function link(SystemStrand $strand);
 
     /**
      * Break a previously created uni-directional link to another strand.
      *
      * @return null
      */
-    public function unlink(KernelStrand $strand);
+    public function unlink(SystemStrand $strand);
 }

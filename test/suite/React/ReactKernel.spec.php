@@ -8,9 +8,9 @@ use Eloquent\Phony\Phony;
 use Exception;
 use React\EventLoop\Factory;
 use React\EventLoop\LoopInterface;
+use Recoil\Exception\KernelPanicException;
 use Recoil\Kernel\Api;
-use Recoil\Kernel\Exception\KernelPanicException;
-use Recoil\Kernel\Exception\KernelStoppedException;
+use Recoil\React\Exception\KernelStoppedException;
 use Recoil\Recoil;
 use Throwable;
 

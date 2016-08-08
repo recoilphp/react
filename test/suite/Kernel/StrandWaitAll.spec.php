@@ -12,12 +12,12 @@ describe(StrandWaitAll::class, function () {
     beforeEach(function () {
         $this->api = Phony::mock(Api::class);
 
-        $this->strand = Phony::mock(KernelStrand::class);
+        $this->strand = Phony::mock(SystemStrand::class);
 
-        $this->substrand1 = Phony::mock(KernelStrand::class);
+        $this->substrand1 = Phony::mock(SystemStrand::class);
         $this->substrand1->id->returns(1);
 
-        $this->substrand2 = Phony::mock(KernelStrand::class);
+        $this->substrand2 = Phony::mock(SystemStrand::class);
         $this->substrand2->id->returns(2);
 
         $this->subject = new StrandWaitAll(

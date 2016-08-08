@@ -10,21 +10,27 @@ use Generator;
 use Hamcrest\Core\IsInstanceOf;
 use InvalidArgumentException;
 use Recoil\ApiCall;
-use Recoil\Exception\TerminatedException;
+use Recoil\Awaitable;
+use Recoil\AwaitableProvider;
+use Recoil\CoroutineProvider;
 use Recoil\Kernel\Exception\PrimaryListenerRemovedException;
 use Recoil\Kernel\Exception\StrandListenerException;
+use Recoil\Kernel\Exception\TerminatedException;
+use Recoil\Listener;
+use Recoil\Strand;
+use Recoil\StrandTrace;
 use Throwable;
 
 describe(StrandTrait::class, function () {
 
     beforeEach(function () {
-        $this->kernel = Phony::mock(Kernel::class);
+        $this->kernel = Phony::mock(SystemKernel::class);
         $this->api = Phony::mock(Api::class);
         $this->trace = Phony::mock(StrandTrace::class);
 
         $this->initializeSubject = function ($entryPoint = null) {
             $this->subject = Phony::partialMock(
-                [KernelStrand::class, Awaitable::class, StrandTrait::class],
+                [SystemStrand::class, Awaitable::class, StrandTrait::class],
                 [
                     $this->kernel->get(),
                     $this->api->get(),
@@ -43,8 +49,8 @@ describe(StrandTrait::class, function () {
         $this->listener1 = Phony::mock(Listener::class);
         $this->listener2 = Phony::mock(Listener::class);
 
-        $this->strand1 = Phony::mock(KernelStrand::class);
-        $this->strand2 = Phony::mock(KernelStrand::class);
+        $this->strand1 = Phony::mock(SystemStrand::class);
+        $this->strand2 = Phony::mock(SystemStrand::class);
     });
 
     afterEach(function () {

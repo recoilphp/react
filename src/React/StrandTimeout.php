@@ -6,12 +6,12 @@ namespace Recoil\React;
 
 use React\EventLoop\LoopInterface;
 use React\EventLoop\Timer\TimerInterface;
-use Recoil\Exception\TimeoutException;
+use Recoil\Awaitable;
 use Recoil\Kernel\Api;
-use Recoil\Kernel\Awaitable;
-use Recoil\Kernel\KernelStrand;
-use Recoil\Kernel\Listener;
-use Recoil\Kernel\Strand;
+use Recoil\Kernel\Exception\TimeoutException;
+use Recoil\Kernel\SystemStrand;
+use Recoil\Listener;
+use Recoil\Strand;
 use Throwable;
 
 /**
@@ -27,7 +27,7 @@ final class StrandTimeout implements Awaitable, Listener
     public function __construct(
         LoopInterface $eventLoop,
         float $timeout,
-        KernelStrand $substrand
+        SystemStrand $substrand
     ) {
         $this->eventLoop = $eventLoop;
         $this->timeout = $timeout;

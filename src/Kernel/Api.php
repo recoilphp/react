@@ -26,13 +26,13 @@ interface Api
      * This method is responsible for handling the "dispatchable values" as
      * described in the doc-block of the {@see Recoil} API facade.
      *
-     * @param KernelStrand $strand The strand executing the API call.
+     * @param SystemStrand $strand The strand executing the API call.
      * @param mixed        $key    The yielded key.
      * @param mixed        $value  The yielded value.
      *
      * @return null
      */
-    public function __dispatch(KernelStrand $strand, $key, $value);
+    public function __dispatch(SystemStrand $strand, $key, $value);
 
     /**
      * Invoke a non-standard API operation.
@@ -50,71 +50,71 @@ interface Api
      *
      * @see Recoil::execute() for the full specification.
      *
-     * @param KernelStrand $strand    The strand executing the API call.
+     * @param SystemStrand $strand    The strand executing the API call.
      * @param mixed        $coroutine The coroutine to execute.
      *
      * @return Generator|null
      */
-    public function execute(KernelStrand $strand, $coroutine);
+    public function execute(SystemStrand $strand, $coroutine);
 
     /**
      * Create a callback function that starts a new strand of execution.
      *
      * @see Recoil::callback() for the full specification.
      *
-     * @param KernelStrand $strand    The strand executing the API call.
+     * @param SystemStrand $strand    The strand executing the API call.
      * @param callable     $coroutine The coroutine to execute.
      *
      * @return Generator|null
      */
-    public function callback(KernelStrand $strand, callable $coroutine);
+    public function callback(SystemStrand $strand, callable $coroutine);
 
     /**
      * Force the current strand to cooperate.
      *
      * @see Recoil::cooperate() for the full specification.
      *
-     * @param KernelStrand $strand The strand executing the API call.
+     * @param SystemStrand $strand The strand executing the API call.
      *
      * @return Generator|null
      */
-    public function cooperate(KernelStrand $strand);
+    public function cooperate(SystemStrand $strand);
 
     /**
      * Suspend the current strand for a fixed interval.
      *
      * @see Recoil::sleep() for the full specification.
      *
-     * @param KernelStrand $strand   The strand executing the API call.
+     * @param SystemStrand $strand   The strand executing the API call.
      * @param float        $interval The interval to wait, in seconds.
      *
      * @return Generator|null
      */
-    public function sleep(KernelStrand $strand, float $interval);
+    public function sleep(SystemStrand $strand, float $interval);
 
     /**
      * Execute a coroutine with a cap on execution time.
      *
      * @see Recoil::timeout() for the full specification.
      *
-     * @param KernelStrand $strand    The strand executing the API call.
+     * @param SystemStrand $strand    The strand executing the API call.
      * @param float        $timeout   The interval to allow for execution, in seconds.
      * @param mixed        $coroutine The coroutine to execute.
      *
      * @return Generator|null
      */
-    public function timeout(KernelStrand $strand, float $timeout, $coroutine);
+    public function timeout(SystemStrand $strand, float $timeout, $coroutine);
 
     /**
      * Get the current strand.
      *
      * @see Recoil::strand() for the full specification.
      *
-     * @param KernelStrand $strand The strand executing the API call.
+     * @param SystemStrand $strand The strand executing the API call.
      *
      * @return Generator|null
      */
-    public function strand(KernelStrand $strand);
+    public function strand(SystemStrand $strand);
 
     /**
      * Suspend execution of the calling strand until it is manually resumed or
@@ -122,14 +122,14 @@ interface Api
      *
      * @see Recoil::suspend() for the full specification.
      *
-     * @param KernelStrand  $strand      The strand executing the API call.
+     * @param SystemStrand  $strand      The strand executing the API call.
      * @param callable|null $suspendFn   A function invoked with the strand after it is suspended.
      * @param callable|null $terminateFn A function invoked if the strand is terminated while suspended.
      *
      * @return Generator|null
      */
     public function suspend(
-        KernelStrand $strand,
+        SystemStrand $strand,
         callable $suspendFn = null,
         callable $terminateFn = null
     );
@@ -139,38 +139,38 @@ interface Api
      *
      * @see Recoil::terminate() for the full specification.
      *
-     * @param KernelStrand $strand The strand executing the API call.
+     * @param SystemStrand $strand The strand executing the API call.
      *
      * @return Generator|null
      */
-    public function terminate(KernelStrand $strand);
+    public function terminate(SystemStrand $strand);
 
     /**
      * Stop the kernel.
      *
      * @see Recoil::stop() for the full specification.
      *
-     * @param KernelStrand $strand The strand executing the API call.
+     * @param SystemStrand $strand The strand executing the API call.
      *
      * @return Generator|null
      */
-    public function stop(KernelStrand $strand);
+    public function stop(SystemStrand $strand);
 
     /**
      * Create a bi-directional link between two strands.
      *
      * @see Recoil::link() for the full specification.
      *
-     * @param KernelStrand      $strand  The strand executing the API call.
-     * @param KernelStrand      $strandA The first strand to link.
-     * @param KernelStrand|null $strandB The first strand to link (null = calling strand).
+     * @param SystemStrand      $strand  The strand executing the API call.
+     * @param SystemStrand      $strandA The first strand to link.
+     * @param SystemStrand|null $strandB The first strand to link (null = calling strand).
      *
      * @return Generator|null
      */
     public function link(
-        KernelStrand $strand,
-        KernelStrand $strandA,
-        KernelStrand $strandB = null
+        SystemStrand $strand,
+        SystemStrand $strandA,
+        SystemStrand $strandB = null
     );
 
     /**
@@ -178,16 +178,16 @@ interface Api
      *
      * @see Recoil::link() for the full specification.
      *
-     * @param KernelStrand      $strand  The strand executing the API call.
-     * @param KernelStrand      $strandA The first strand to unlink.
-     * @param KernelStrand|null $strandB The first strand to unlink (null = calling strand).
+     * @param SystemStrand      $strand  The strand executing the API call.
+     * @param SystemStrand      $strandA The first strand to unlink.
+     * @param SystemStrand|null $strandB The first strand to unlink (null = calling strand).
      *
      * @return Generator|null
      */
     public function unlink(
-        KernelStrand $strand,
-        KernelStrand $strandA,
-        KernelStrand $strandB = null
+        SystemStrand $strand,
+        SystemStrand $strandA,
+        SystemStrand $strandB = null
     );
 
     /**
@@ -195,24 +195,24 @@ interface Api
      *
      * @see Recoil::adopt() for the full specification.
      *
-     * @param KernelStrand $strand    The strand executing the API call.
-     * @param KernelStrand $substrand The strand to monitor.
+     * @param SystemStrand $strand    The strand executing the API call.
+     * @param SystemStrand $substrand The strand to monitor.
      *
      * @return Generator|null
      */
-    public function adopt(KernelStrand $strand, KernelStrand $substrand);
+    public function adopt(SystemStrand $strand, SystemStrand $substrand);
 
     /**
      * Execute multiple coroutines concurrently and wait for them all to return.
      *
      * @see Recoil::all() for the full specification.
      *
-     * @param KernelStrand $strand         The strand executing the API call.
+     * @param SystemStrand $strand         The strand executing the API call.
      * @param mixed        $coroutines,... The coroutines to execute.
      *
      * @return Generator|null
      */
-    public function all(KernelStrand $strand, ...$coroutines);
+    public function all(SystemStrand $strand, ...$coroutines);
 
     /**
      * Execute multiple coroutines concurrently and wait for any one of them to
@@ -220,12 +220,12 @@ interface Api
      *
      * @see Recoil::any() for the full specification.
      *
-     * @param KernelStrand $strand         The strand executing the API call.
+     * @param SystemStrand $strand         The strand executing the API call.
      * @param mixed        $coroutines,... The coroutines to execute.
      *
      * @return Generator|null
      */
-    public function any(KernelStrand $strand, ...$coroutines);
+    public function any(SystemStrand $strand, ...$coroutines);
 
     /**
      * Execute multiple coroutines concurrently and wait for a subset of them to
@@ -233,13 +233,13 @@ interface Api
      *
      * @see Recoil::some() for the full specification.
      *
-     * @param KernelStrand $strand         The strand executing the API call.
+     * @param SystemStrand $strand         The strand executing the API call.
      * @param int          $count          The required number of successful strands.
      * @param mixed        $coroutines,... The coroutines to execute.
      *
      * @return Generator|null
      */
-    public function some(KernelStrand $strand, int $count, ...$coroutines);
+    public function some(SystemStrand $strand, int $count, ...$coroutines);
 
     /**
      * Execute multiple coroutines concurrently and wait for any one of them
@@ -247,19 +247,19 @@ interface Api
      *
      * @see Recoil::first() for the full specification.
      *
-     * @param KernelStrand $strand         The strand executing the API call.
+     * @param SystemStrand $strand         The strand executing the API call.
      * @param mixed        $coroutines,... The coroutines to execute.
      *
      * @return Generator|null
      */
-    public function first(KernelStrand $strand, ...$coroutines);
+    public function first(SystemStrand $strand, ...$coroutines);
 
     /**
      * Read data from a stream.
      *
      * @see Recoil::read() for the full specification.
      *
-     * @param KernelStrand $strand    The strand executing the API call.
+     * @param SystemStrand $strand    The strand executing the API call.
      * @param resource     $stream    A readable stream resource.
      * @param int          $minLength The minimum number of bytes to read.
      * @param int          $maxLength The maximum number of bytes to read.
@@ -267,7 +267,7 @@ interface Api
      * @return Generator|null
      */
     public function read(
-        KernelStrand $strand,
+        SystemStrand $strand,
         $stream,
         int $minLength,
         int $maxLength
@@ -278,7 +278,7 @@ interface Api
      *
      * @see Recoil::write() for the full specification.
      *
-     * @param KernelStrand $strand The strand executing the API call.
+     * @param SystemStrand $strand The strand executing the API call.
      * @param resource     $stream A writable stream resource.
      * @param string       $buffer The data to write to the stream.
      * @param int          $length The maximum number of bytes to write.
@@ -286,7 +286,7 @@ interface Api
      * @return Generator|null
      */
     public function write(
-        KernelStrand $strand,
+        SystemStrand $strand,
         $stream,
         string $buffer,
         int $length

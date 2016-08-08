@@ -4,9 +4,9 @@ declare (strict_types = 1); // @codeCoverageIgnore
 
 namespace Recoil\React;
 
-use Recoil\Kernel\Kernel;
-use Recoil\Kernel\Listener;
-use Recoil\Kernel\Strand;
+use Recoil\Kernel;
+use Recoil\Listener;
+use Recoil\Strand;
 use Throwable;
 
 /**

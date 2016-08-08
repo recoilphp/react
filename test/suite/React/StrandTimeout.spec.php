@@ -7,10 +7,10 @@ namespace Recoil\React;
 use Eloquent\Phony\Phony;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\Timer\TimerInterface;
-use Recoil\Exception\TimeoutException;
 use Recoil\Kernel\Api;
-use Recoil\Kernel\KernelStrand;
+use Recoil\Kernel\Exception\TimeoutException;
 use Recoil\Kernel\Strand;
+use Recoil\Kernel\SystemStrand;
 use Throwable;
 
 describe(StrandTimeout::class, function () {
@@ -20,9 +20,9 @@ describe(StrandTimeout::class, function () {
         $this->timer = Phony::mock(TimerInterface::class);
         $this->loop = Phony::mock(LoopInterface::class);
         $this->loop->addTimer->returns($this->timer->get());
-        $this->strand = Phony::mock(KernelStrand::class);
+        $this->strand = Phony::mock(SystemStrand::class);
 
-        $this->substrand = Phony::mock(KernelStrand::class);
+        $this->substrand = Phony::mock(SystemStrand::class);
         $this->substrand->id->returns(1);
 
         $this->subject = new StrandTimeout(

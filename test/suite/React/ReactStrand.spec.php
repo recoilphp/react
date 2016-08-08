@@ -5,15 +5,15 @@ declare (strict_types = 1); // @codeCoverageIgnore
 namespace Recoil\React;
 
 use Eloquent\Phony\Phony;
-use Recoil\Exception\TerminatedException;
 use Recoil\Kernel\Api;
-use Recoil\Kernel\Kernel;
+use Recoil\Kernel\Exception\TerminatedException;
+use Recoil\Kernel\SystemKernel;
 use Throwable;
 
 describe(ReactStrand::class, function () {
 
     beforeEach(function () {
-        $this->kernel = Phony::mock(Kernel::class);
+        $this->kernel = Phony::mock(SystemKernel::class);
         $this->api = Phony::mock(Api::class);
     });
 

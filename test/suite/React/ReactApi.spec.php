@@ -8,9 +8,10 @@ use Eloquent\Phony\Phony;
 use Hamcrest\Core\IsInstanceOf;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\Timer\TimerInterface;
-use Recoil\Kernel\Kernel;
-use Recoil\Kernel\KernelStrand;
-use Recoil\Kernel\Strand;
+use Recoil\Kernel;
+use Recoil\Kernel\SystemKernel;
+use Recoil\Kernel\SystemStrand;
+use Recoil\Strand;
 
 describe(ReactApi::class, function () {
 
@@ -19,12 +20,12 @@ describe(ReactApi::class, function () {
         $this->timer = Phony::mock(TimerInterface::class);
         $this->eventLoop->addTimer->returns($this->timer->get());
 
-        $this->kernel = Phony::mock(Kernel::class);
+        $this->kernel = Phony::mock(SystemKernel::class);
 
-        $this->strand = Phony::mock(KernelStrand::class);
+        $this->strand = Phony::mock(SystemStrand::class);
         $this->strand->kernel->returns($this->kernel);
 
-        $this->substrand = Phony::mock(KernelStrand::class);
+        $this->substrand = Phony::mock(SystemStrand::class);
         $this->kernel->execute->returns($this->substrand);
 
         $this->subject = new ReactApi($this->eventLoop->get());

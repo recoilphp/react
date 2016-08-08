@@ -6,20 +6,22 @@ namespace Recoil\React;
 
 use React\EventLoop\Factory;
 use React\EventLoop\LoopInterface;
+use Recoil\Exception\KernelPanicException;
+use Recoil\Exception\StrandException;
 use Recoil\Exception\TerminatedException;
 use Recoil\Kernel\Api;
-use Recoil\Kernel\Exception\KernelPanicException;
-use Recoil\Kernel\Exception\KernelStoppedException;
-use Recoil\Kernel\Exception\StrandException;
-use Recoil\Kernel\Kernel;
-use Recoil\Kernel\Strand;
+use Recoil\Kernel\Exception\KernelException;
+use Recoil\Kernel\Exception\StrandException as StrandExceptionImpl;
+use Recoil\Kernel\SystemKernel;
+use Recoil\React\Exception\KernelStoppedException;
+use Recoil\Strand;
 use SplQueue;
 use Throwable;
 
 /**
  * A Recoil coroutine kernel based on a ReactPHP event loop.
  */
-final class ReactKernel implements Kernel
+final class ReactKernel implements SystemKernel
 {
     /**
      * Execute a coroutine on a new kernel.
@@ -219,9 +221,9 @@ final class ReactKernel implements Kernel
         }
 
         if ($strand === null) {
-            $exception = new KernelPanicException('Kernel panic: ' . $exception->getMessage(), $exception);
+            $exception = new KernelException($exception);
         } else {
-            $exception = new StrandException($strand, $exception);
+            $exception = new StrandExceptionImpl($strand, $exception);
         }
 
         if ($this->exceptionHandler) {
@@ -232,7 +234,7 @@ final class ReactKernel implements Kernel
             } catch (KernelPanicException $e) {
                 $exception = $e;
             } catch (Throwable $e) {
-                $exception = new KernelPanicException('Kernel panic: ' . $e->getMessage(), $e);
+                $exception = new KernelException($e);
             }
         }
 

@@ -7,7 +7,7 @@ namespace Recoil\Kernel;
 use BadMethodCallException;
 use Icecave\Repr\Repr;
 use InvalidArgumentException;
-use Recoil\Exception\RejectedException;
+use Recoil\Kernel\Exception\RejectedException;
 use Recoil\Recoil;
 use Throwable;
 use UnexpectedValueException;
@@ -27,11 +27,11 @@ trait ApiTrait
      * This method is responsible for handling the "dispatchable values" as
      * described in the doc-block of the {@see Recoil} API facade.
      *
-     * @param KernelStrand $strand The strand executing the API call.
+     * @param SystemStrand $strand The strand executing the API call.
      * @param mixed        $key    The yielded key.
      * @param mixed        $value  The yielded value.
      */
-    public function __dispatch(KernelStrand $strand, $key, $value)
+    public function __dispatch(SystemStrand $strand, $key, $value)
     {
         if (null === $value) {
             $this->cooperate($strand);
@@ -84,7 +84,7 @@ trait ApiTrait
      */
     public function __call(string $name, array $arguments)
     {
-        (function (string $name, KernelStrand $strand) {
+        (function (string $name, SystemStrand $strand) {
             $strand->throw(
                 new BadMethodCallException(
                     'The API does not implement an operation named "' . $name . '".'
@@ -98,12 +98,12 @@ trait ApiTrait
      *
      * @see Recoil::execute() for the full specification.
      *
-     * @param KernelStrand $strand    The strand executing the API call.
+     * @param SystemStrand $strand    The strand executing the API call.
      * @param mixed        $coroutine The coroutine to execute.
      *
      * @return Generator|null
      */
-    public function execute(KernelStrand $strand, $coroutine)
+    public function execute(SystemStrand $strand, $coroutine)
     {
         $strand->send($strand->kernel()->execute($coroutine));
     }
@@ -113,12 +113,12 @@ trait ApiTrait
      *
      * @see Recoil::callback() for the full specification.
      *
-     * @param KernelStrand $strand    The strand executing the API call.
+     * @param SystemStrand $strand    The strand executing the API call.
      * @param callable     $coroutine The coroutine to execute.
      *
      * @return Generator|null
      */
-    public function callback(KernelStrand $strand, callable $coroutine)
+    public function callback(SystemStrand $strand, callable $coroutine)
     {
         $kernel = $strand->kernel();
 
@@ -134,34 +134,34 @@ trait ApiTrait
      *
      * @see Recoil::cooperate() for the full specification.
      *
-     * @param KernelStrand $strand The strand executing the API call.
+     * @param SystemStrand $strand The strand executing the API call.
      *
      * @return Generator|null
      */
-    abstract public function cooperate(KernelStrand $strand);
+    abstract public function cooperate(SystemStrand $strand);
 
     /**
      * Suspend the current strand for a fixed interval.
      *
      * @see Recoil::sleep() for the full specification.
      *
-     * @param KernelStrand $strand   The strand executing the API call.
+     * @param SystemStrand $strand   The strand executing the API call.
      * @param float        $interval The interval to wait.
      *
      * @return Generator|null
      */
-    abstract public function sleep(KernelStrand $strand, float $interval);
+    abstract public function sleep(SystemStrand $strand, float $interval);
 
     /**
      * Get the current strand.
      *
      * @see Recoil::strand() for the full specification.
      *
-     * @param KernelStrand $strand The strand executing the API call.
+     * @param SystemStrand $strand The strand executing the API call.
      *
      * @return Generator|null
      */
-    public function strand(KernelStrand $strand)
+    public function strand(SystemStrand $strand)
     {
         $strand->send($strand);
     }
@@ -172,14 +172,14 @@ trait ApiTrait
      *
      * @see Recoil::suspend() for the full specification.
      *
-     * @param KernelStrand  $strand      The strand executing the API call.
+     * @param SystemStrand  $strand      The strand executing the API call.
      * @param callable|null $suspendFn   A function invoked with the strand after it is suspended.
      * @param callable|null $terminateFn A function invoked if the strand is terminated while suspended.
      *
      * @return Generator|null
      */
     public function suspend(
-        KernelStrand $strand,
+        SystemStrand $strand,
         callable $suspendFn = null,
         callable $terminateFn = null
     ) {
@@ -196,11 +196,11 @@ trait ApiTrait
      *
      * @see Recoil::terminate() for the full specification.
      *
-     * @param KernelStrand $strand The strand executing the API call.
+     * @param SystemStrand $strand The strand executing the API call.
      *
      * @return Generator|null
      */
-    public function terminate(KernelStrand $strand)
+    public function terminate(SystemStrand $strand)
     {
         $strand->terminate();
     }
@@ -210,11 +210,11 @@ trait ApiTrait
      *
      * @see Recoil::stop() for the full specification.
      *
-     * @param KernelStrand $strand The strand executing the API call.
+     * @param SystemStrand $strand The strand executing the API call.
      *
      * @return Generator|null
      */
-    public function stop(KernelStrand $strand)
+    public function stop(SystemStrand $strand)
     {
         $strand->kernel()->stop();
     }
@@ -224,16 +224,16 @@ trait ApiTrait
      *
      * @see Recoil::link() for the full specification.
      *
-     * @param KernelStrand      $strand  The strand executing the API call.
-     * @param KernelStrand      $strandA The first strand to link.
-     * @param KernelStrand|null $strandB The first strand to link (null = calling strand).
+     * @param SystemStrand      $strand  The strand executing the API call.
+     * @param SystemStrand      $strandA The first strand to link.
+     * @param SystemStrand|null $strandB The first strand to link (null = calling strand).
      *
      * @return Generator|null
      */
     public function link(
-        KernelStrand $strand,
-        KernelStrand $strandA,
-        KernelStrand $strandB = null
+        SystemStrand $strand,
+        SystemStrand $strandA,
+        SystemStrand $strandB = null
     ) {
         if ($strandB === null) {
             $strandB = $strand;
@@ -250,16 +250,16 @@ trait ApiTrait
      *
      * @see Recoil::link() for the full specification.
      *
-     * @param KernelStrand      $strand  The strand executing the API call.
-     * @param KernelStrand      $strandA The first strand to unlink.
-     * @param KernelStrand|null $strandB The first strand to unlink (null = calling strand).
+     * @param SystemStrand      $strand  The strand executing the API call.
+     * @param SystemStrand      $strandA The first strand to unlink.
+     * @param SystemStrand|null $strandB The first strand to unlink (null = calling strand).
      *
      * @return Generator|null
      */
     public function unlink(
-        KernelStrand $strand,
-        KernelStrand $strandA,
-        KernelStrand $strandB = null
+        SystemStrand $strand,
+        SystemStrand $strandA,
+        SystemStrand $strandB = null
     ) {
         if ($strandB === null) {
             $strandB = $strand;
@@ -276,12 +276,12 @@ trait ApiTrait
      *
      * @see Recoil::adopt() for the full specification.
      *
-     * @param KernelStrand $strand    The strand executing the API call.
-     * @param KernelStrand $substrand The strand to monitor.
+     * @param SystemStrand $strand    The strand executing the API call.
+     * @param SystemStrand $substrand The strand to monitor.
      *
      * @return Generator|null
      */
-    public function adopt(KernelStrand $strand, KernelStrand $substrand)
+    public function adopt(SystemStrand $strand, SystemStrand $substrand)
     {
         $strand->setTerminator(function () use ($substrand) {
             $substrand->clearPrimaryListener();
@@ -296,12 +296,12 @@ trait ApiTrait
      *
      * @see Recoil::all() for the full specification.
      *
-     * @param KernelStrand $strand         The strand executing the API call.
+     * @param SystemStrand $strand         The strand executing the API call.
      * @param mixed        $coroutines,... The coroutines to execute.
      *
      * @return Generator|null
      */
-    public function all(KernelStrand $strand, ...$coroutines)
+    public function all(SystemStrand $strand, ...$coroutines)
     {
         $kernel = $strand->kernel();
         $substrands = [];
@@ -319,12 +319,12 @@ trait ApiTrait
      *
      * @see Recoil::any() for the full specification.
      *
-     * @param KernelStrand $strand         The strand executing the API call.
+     * @param SystemStrand $strand         The strand executing the API call.
      * @param mixed        $coroutines,... The coroutines to execute.
      *
      * @return Generator|null
      */
-    public function any(KernelStrand $strand, ...$coroutines)
+    public function any(SystemStrand $strand, ...$coroutines)
     {
         $kernel = $strand->kernel();
         $substrands = [];
@@ -342,13 +342,13 @@ trait ApiTrait
      *
      * @see Recoil::some() for the full specification.
      *
-     * @param KernelStrand $strand         The strand executing the API call.
+     * @param SystemStrand $strand         The strand executing the API call.
      * @param int          $count          The required number of successful strands.
      * @param mixed        $coroutines,... The coroutines to execute.
      *
      * @return Generator|null
      */
-    public function some(KernelStrand $strand, int $count, ...$coroutines)
+    public function some(SystemStrand $strand, int $count, ...$coroutines)
     {
         $max = \count($coroutines);
 
@@ -382,12 +382,12 @@ trait ApiTrait
      *
      * @see Recoil::first() for the full specification.
      *
-     * @param KernelStrand $strand         The strand executing the API call.
+     * @param SystemStrand $strand         The strand executing the API call.
      * @param mixed        $coroutines,... The coroutines to execute.
      *
      * @return Generator|null
      */
-    public function first(KernelStrand $strand, ...$coroutines)
+    public function first(SystemStrand $strand, ...$coroutines)
     {
         $kernel = $strand->kernel();
         $substrands = [];
@@ -404,7 +404,7 @@ trait ApiTrait
      *
      * @see Recoil::read() for the full specification.
      *
-     * @param KernelStrand $strand    The strand executing the API call.
+     * @param SystemStrand $strand    The strand executing the API call.
      * @param resource     $stream    A readable stream resource.
      * @param int          $minLength The minimum number of bytes to read.
      * @param int          $maxLength The maximum number of bytes to read.
@@ -412,7 +412,7 @@ trait ApiTrait
      * @return Generator|null
      */
     abstract public function read(
-        KernelStrand $strand,
+        SystemStrand $strand,
         $stream,
         int $minLength,
         int $maxLength
@@ -423,7 +423,7 @@ trait ApiTrait
      *
      * @see Recoil::write() for the full specification.
      *
-     * @param KernelStrand $strand The strand executing the API call.
+     * @param SystemStrand $strand The strand executing the API call.
      * @param resource     $stream A writable stream resource.
      * @param string       $buffer The data to write to the stream.
      * @param int          $length The maximum number of bytes to write.
@@ -431,7 +431,7 @@ trait ApiTrait
      * @return Generator|null
      */
     abstract public function write(
-        KernelStrand $strand,
+        SystemStrand $strand,
         $stream,
         string $buffer,
         int $length

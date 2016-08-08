@@ -2,10 +2,10 @@
 
 declare (strict_types = 1); // @codeCoverageIgnore
 
-namespace Recoil\Exception;
+namespace Recoil\Kernel\Exception;
 
 use Eloquent\Phony\Phony;
-use Recoil\Kernel\Strand;
+use Recoil\Strand;
 
 describe(TerminatedException::class, function () {
 
@@ -14,6 +14,15 @@ describe(TerminatedException::class, function () {
         $this->strand->id->returns(123);
 
         $this->subject = new TerminatedException($this->strand->get());
+    });
+
+    it('implements the public api interface', function () {
+        expect(
+            is_subclass_of(
+                TerminatedException::class,
+                \Recoil\Exception\TerminatedException::class
+            )
+        )->to->be->true;
     });
 
     it('produces a useful message', function () {

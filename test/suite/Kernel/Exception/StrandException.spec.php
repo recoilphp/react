@@ -6,7 +6,7 @@ namespace Recoil\Kernel\Exception;
 
 use Eloquent\Phony\Phony;
 use Error;
-use Recoil\Kernel\Strand;
+use Recoil\Strand;
 
 describe(StrandException::class, function () {
 
@@ -19,6 +19,15 @@ describe(StrandException::class, function () {
             $this->strand->get(),
             $this->previous
         );
+    });
+
+    it('implements the public api interface', function () {
+        expect(
+            is_subclass_of(
+                StrandException::class,
+                \Recoil\Exception\StrandException::class
+            )
+        )->to->be->true;
     });
 
     it('produces a useful message', function () {

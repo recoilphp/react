@@ -2,14 +2,15 @@
 
 declare (strict_types = 1); // @codeCoverageIgnore
 
-namespace Recoil\Exception;
+namespace Recoil\Kernel\Exception;
 
 use RuntimeException;
 
 /**
  * An operation has timed out.
  */
-class TimeoutException extends RuntimeException
+class TimeoutException extends RuntimeException implements
+    \Recoil\Exception\TimeoutException
 {
     public function __construct(float $seconds)
     {

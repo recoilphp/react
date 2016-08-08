@@ -2,16 +2,17 @@
 
 declare (strict_types = 1); // @codeCoverageIgnore
 
-namespace Recoil\Exception;
+namespace Recoil\Kernel\Exception;
 
 use Exception;
 use Throwable;
 
 /**
- * Holds exceptions produced by API operations that run multiple strands in
- * parallel.
+ * A container for multiple exceptions produced by API operations that run
+ * multiple strands in parallel.
  */
-class CompositeException extends Exception
+class CompositeException extends Exception implements
+    \Recoil\Exception\CompositeException
 {
     /**
      * @param array<integer, Throwable> The exceptions.
@@ -31,7 +32,7 @@ class CompositeException extends Exception
      * allows unpacking of the result with list() to get the results in
      * pass-order.
      *
-     * @return array<integer, Throwable> The exceptions.
+     * @return array<int, Throwable> The exceptions.
      */
     public function exceptions() : array
     {

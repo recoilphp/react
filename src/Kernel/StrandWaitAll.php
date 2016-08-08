@@ -4,6 +4,9 @@ declare (strict_types = 1); // @codeCoverageIgnore
 
 namespace Recoil\Kernel;
 
+use Recoil\Awaitable;
+use Recoil\Listener;
+use Recoil\Strand;
 use Throwable;
 
 /**
@@ -11,7 +14,7 @@ use Throwable;
  */
 final class StrandWaitAll implements Awaitable, Listener
 {
-    public function __construct(KernelStrand ...$substrands)
+    public function __construct(SystemStrand ...$substrands)
     {
         $this->substrands = $substrands;
     }
@@ -26,7 +29,7 @@ final class StrandWaitAll implements Awaitable, Listener
      */
     public function await(Listener $listener)
     {
-        if ($listener instanceof KernelStrand) {
+        if ($listener instanceof SystemStrand) {
             $listener->setTerminator([$this, 'cancel']);
         }
 
@@ -97,7 +100,7 @@ final class StrandWaitAll implements Awaitable, Listener
     private $listener;
 
     /**
-     * @var array<KernelStrand> The strands to wait for.
+     * @var array<SystemStrand> The strands to wait for.
      */
     private $substrands;
 

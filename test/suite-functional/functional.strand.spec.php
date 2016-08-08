@@ -6,11 +6,6 @@ namespace Recoil;
 
 use Exception;
 use Generator;
-use Recoil\Kernel\Awaitable;
-use Recoil\Kernel\AwaitableProvider;
-use Recoil\Kernel\CoroutineProvider;
-use Recoil\Kernel\Listener;
-use Recoil\Kernel\Strand;
 
 rit('can invoke generator as coroutine', function () {
     $result = yield (function () {

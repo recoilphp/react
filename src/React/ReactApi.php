@@ -6,11 +6,11 @@ namespace Recoil\React;
 
 use ErrorException;
 use React\EventLoop\LoopInterface;
-use Recoil\Exception\TimeoutException;
 use Recoil\Kernel\Api;
 use Recoil\Kernel\ApiTrait;
-use Recoil\Kernel\KernelStrand;
+use Recoil\Kernel\Exception\TimeoutException;
 use Recoil\Kernel\Strand;
+use Recoil\Kernel\SystemStrand;
 
 /**
  * A kernel API based on the React event loop.
@@ -33,9 +33,9 @@ final class ReactApi implements Api
      *
      * @see Recoil::cooperate() for the full specification.
      *
-     * @param KernelStrand $strand The strand executing the API call.
+     * @param SystemStrand $strand The strand executing the API call.
      */
-    public function cooperate(KernelStrand $strand)
+    public function cooperate(SystemStrand $strand)
     {
         $this->eventLoop->futureTick(
             static function () use ($strand) {
@@ -49,10 +49,10 @@ final class ReactApi implements Api
      *
      * @see Recoil::sleep() for the full specification.
      *
-     * @param KernelStrand $strand   The strand executing the API call.
+     * @param SystemStrand $strand   The strand executing the API call.
      * @param float        $interval The interval to wait, in seconds.
      */
-    public function sleep(KernelStrand $strand, float $interval)
+    public function sleep(SystemStrand $strand, float $interval)
     {
         if ($interval > 0) {
             $timer = $this->eventLoop->addTimer(
@@ -81,14 +81,14 @@ final class ReactApi implements Api
      *
      * @see Recoil::timeout() for the full specification.
      *
-     * @param KernelStrand $strand    The strand executing the API call.
+     * @param SystemStrand $strand    The strand executing the API call.
      * @param float        $timeout   The interval to allow for execution, in seconds.
      * @param mixed        $coroutine The coroutine to execute.
      */
-    public function timeout(KernelStrand $strand, float $timeout, $coroutine)
+    public function timeout(SystemStrand $strand, float $timeout, $coroutine)
     {
         $substrand = $strand->kernel()->execute($coroutine);
-        assert($substrand instanceof KernelStrand);
+        assert($substrand instanceof SystemStrand);
 
         (new StrandTimeout($this->eventLoop, $timeout, $substrand))->await($strand);
     }
@@ -98,13 +98,13 @@ final class ReactApi implements Api
      *
      * @see Recoil::read() for the full specification.
      *
-     * @param KernelStrand $strand    The strand executing the API call.
+     * @param SystemStrand $strand    The strand executing the API call.
      * @param resource     $stream    A readable stream resource.
      * @param int          $minLength The minimum number of bytes to read.
      * @param int          $maxLength The maximum number of bytes to read.
      */
     public function read(
-        KernelStrand $strand,
+        SystemStrand $strand,
         $stream,
         int $minLength,
         int $maxLength
@@ -170,13 +170,13 @@ final class ReactApi implements Api
      *
      * @see Recoil::write() for the full specification.
      *
-     * @param KernelStrand $strand The strand executing the API call.
+     * @param SystemStrand $strand The strand executing the API call.
      * @param resource     $stream A writable stream resource.
      * @param string       $buffer The data to write to the stream.
      * @param int          $length The maximum number of bytes to write.
      */
     public function write(
-        KernelStrand $strand,
+        SystemStrand $strand,
         $stream,
         string $buffer,
         int $length = PHP_INT_MAX
@@ -263,7 +263,7 @@ final class ReactApi implements Api
      * @return null
      */
     public function select(
-        KernelStrand $strand,
+        SystemStrand $strand,
         array $read = null,
         array $write = null,
         float $timeout = null
@@ -361,9 +361,9 @@ final class ReactApi implements Api
      *
      * The caller is resumed with the event loop used by this API.
      *
-     * @param KernelStrand $strand The strand executing the API call.
+     * @param SystemStrand $strand The strand executing the API call.
      */
-    public function eventLoop(KernelStrand $strand)
+    public function eventLoop(SystemStrand $strand)
     {
         $strand->send($this->eventLoop);
     }

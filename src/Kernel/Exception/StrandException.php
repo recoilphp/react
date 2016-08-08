@@ -4,13 +4,15 @@ declare (strict_types = 1); // @codeCoverageIgnore
 
 namespace Recoil\Kernel\Exception;
 
-use Recoil\Kernel\Strand;
+use Exception;
+use Recoil\Strand;
 use Throwable;
 
 /**
  * A strand has caused a kernel panic.
  */
-class StrandException extends KernelPanicException
+class StrandException extends Exception implements
+    \Recoil\Exception\StrandException
 {
     /**
      * @param Strand    $strand    The failed strand.
@@ -19,7 +21,6 @@ class StrandException extends KernelPanicException
     public function __construct(Strand $strand, Throwable $previous)
     {
         $this->strand = $strand;
-
         parent::__construct(
             sprintf(
                 'Unhandled exception in strand #%d: %s (%s).',
@@ -27,6 +28,7 @@ class StrandException extends KernelPanicException
                 get_class($previous),
                 $previous->getMessage()
             ),
+            0,
             $previous
         );
     }

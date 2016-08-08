@@ -6,7 +6,7 @@ namespace Recoil\React;
 
 use Eloquent\Phony\Phony;
 use React\Promise\Deferred;
-use Recoil\Kernel\Strand;
+use Recoil\Strand;
 use Throwable;
 
 describe(DeferredAdaptor::class, function () {

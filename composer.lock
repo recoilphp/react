@@ -152,12 +152,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/recoilphp/api.git",
-                "reference": "ca579d1846b9c1cb995c2ac039d6ba1079bd6862"
+                "reference": "b5b6580859dd6b1de8430dccc1924b3284bb7cf4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/recoilphp/api/zipball/ca579d1846b9c1cb995c2ac039d6ba1079bd6862",
-                "reference": "ca579d1846b9c1cb995c2ac039d6ba1079bd6862",
+                "url": "https://api.github.com/repos/recoilphp/api/zipball/b5b6580859dd6b1de8430dccc1924b3284bb7cf4",
+                "reference": "b5b6580859dd6b1de8430dccc1924b3284bb7cf4",
                 "shasum": ""
             },
             "require": {
@@ -187,7 +187,7 @@
                     "homepage": "https://github.com/jmalloc"
                 }
             ],
-            "description": "Recoil API specification and interfaces.",
+            "description": "The public Recoil API, for library and application developers.",
             "homepage": "https://github.com/recoilphp/api",
             "keywords": [
                 "Thread",
@@ -201,22 +201,22 @@
                 "multitasking",
                 "react"
             ],
-            "time": "2016-08-05 03:31:10"
+            "time": "2016-08-08 05:27:48"
         }
     ],
     "packages-dev": [
         {
             "name": "eloquent/phony",
-            "version": "0.13.2",
+            "version": "0.13.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/eloquent/phony.git",
-                "reference": "81eeba86429314cff2dc0ace171ef3258890d492"
+                "reference": "b3ab895c5b959fc6b1085c0b1c3c37d2b7881949"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eloquent/phony/zipball/81eeba86429314cff2dc0ace171ef3258890d492",
-                "reference": "81eeba86429314cff2dc0ace171ef3258890d492",
+                "url": "https://api.github.com/repos/eloquent/phony/zipball/b3ab895c5b959fc6b1085c0b1c3c37d2b7881949",
+                "reference": "b3ab895c5b959fc6b1085c0b1c3c37d2b7881949",
                 "shasum": ""
             },
             "require": {
@@ -278,7 +278,7 @@
                 "stubbing",
                 "test"
             ],
-            "time": "2016-08-04 23:21:21"
+            "time": "2016-08-07 12:26:56"
         },
         {
             "name": "evenement/evenement",

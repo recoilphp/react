@@ -8,25 +8,31 @@ use Closure;
 use Generator;
 use InvalidArgumentException;
 use Recoil\ApiCall;
-use Recoil\Exception\TerminatedException;
+use Recoil\Awaitable;
+use Recoil\AwaitableProvider;
+use Recoil\CoroutineProvider;
 use Recoil\Kernel\Exception\PrimaryListenerRemovedException;
 use Recoil\Kernel\Exception\StrandListenerException;
+use Recoil\Kernel\Exception\TerminatedException;
+use Recoil\Listener;
+use Recoil\Strand;
+use Recoil\StrandTrace;
 use SplObjectStorage;
 use Throwable;
 
 /**
- * The standard {@see KernelStrand} implementation.
+ * The standard {@see SystemStrand} implementation.
  */
 trait StrandTrait
 {
     /**
-     * @param Kernel $kernel     The kernel on which the strand is executing.
-     * @param Api    $api        The kernel API used to handle yielded values.
-     * @param int    $id         The strand ID.
-     * @param mixed  $entryPoint The strand's entry-point coroutine.
+     * @param SystemKernel $kernel     The kernel on which the strand is executing.
+     * @param Api          $api        The kernel API used to handle yielded values.
+     * @param int          $id         The strand ID.
+     * @param mixed        $entryPoint The strand's entry-point coroutine.
      */
     public function __construct(
-        Kernel $kernel,
+        SystemKernel $kernel,
         Api $api,
         int $id,
         $entryPoint
@@ -73,7 +79,7 @@ trait StrandTrait
     /**
      * @return Kernel The kernel on which the strand is executing.
      */
-    public function kernel() : Kernel
+    public function kernel() : SystemKernel
     {
         return $this->kernel;
     }
@@ -530,7 +536,7 @@ trait StrandTrait
      *
      * @return null
      */
-    public function link(KernelStrand $strand)
+    public function link(SystemStrand $strand)
     {
         if ($this->linkedStrands === null) {
             $this->linkedStrands = new SplObjectStorage();
@@ -544,7 +550,7 @@ trait StrandTrait
      *
      * @return null
      */
-    public function unlink(KernelStrand $strand)
+    public function unlink(SystemStrand $strand)
     {
         if ($this->linkedStrands !== null) {
             $this->linkedStrands->detach($strand);

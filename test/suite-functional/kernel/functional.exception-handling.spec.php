@@ -5,9 +5,8 @@ declare (strict_types = 1); // @codeCoverageIgnore
 namespace Recoil;
 
 use Exception;
-use Recoil\Kernel\Exception\KernelPanicException;
-use Recoil\Kernel\Exception\StrandException;
-use Recoil\Kernel\Strand;
+use Recoil\Exception\KernelPanicException;
+use Recoil\Exception\StrandException;
 
 beforeEach(function () {
     $this->exception = new Exception('<exception>');

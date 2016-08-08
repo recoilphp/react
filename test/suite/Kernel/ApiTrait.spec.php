@@ -9,19 +9,19 @@ use Eloquent\Phony\Phony;
 use Error;
 use Hamcrest\Core\IsInstanceOf;
 use InvalidArgumentException;
-use Recoil\Exception\RejectedException;
+use Recoil\Kernel\Exception\RejectedException;
 use Throwable;
 use UnexpectedValueException;
 
 describe(ApiTrait::class, function () {
 
     beforeEach(function () {
-        $this->kernel = Phony::mock(Kernel::class);
-        $this->strand = Phony::mock(KernelStrand::class);
+        $this->kernel = Phony::mock(SystemKernel::class);
+        $this->strand = Phony::mock(SystemStrand::class);
         $this->strand->kernel->returns($this->kernel);
 
-        $this->substrand1 = Phony::mock(KernelStrand::class);
-        $this->substrand2 = Phony::mock(KernelStrand::class);
+        $this->substrand1 = Phony::mock(SystemStrand::class);
+        $this->substrand2 = Phony::mock(SystemStrand::class);
         $this->kernel->execute->returns(
             $this->substrand1,
             $this->substrand2

@@ -5,8 +5,8 @@ declare (strict_types = 1); // @codeCoverageIgnore
 namespace Recoil\React;
 
 use React\Promise\Deferred;
-use Recoil\Kernel\Listener;
-use Recoil\Kernel\Strand;
+use Recoil\Listener;
+use Recoil\Strand;
 use Throwable;
 
 /**

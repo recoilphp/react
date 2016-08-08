@@ -2,15 +2,16 @@
 
 declare (strict_types = 1); // @codeCoverageIgnore
 
-namespace Recoil\Exception;
+namespace Recoil\Kernel\Exception;
 
-use Recoil\Kernel\Strand;
+use Recoil\Strand;
 use RuntimeException;
 
 /**
  * Indicates that a strand has been explicitly terminated.
  */
-class TerminatedException extends RuntimeException
+class TerminatedException extends RuntimeException implements
+    \Recoil\Exception\TerminatedException
 {
     /**
      * @param Strand $strand The terminated strand.
