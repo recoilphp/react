@@ -11,7 +11,7 @@ script: make ci
 after_script: bash <(curl -s https://codecov.io/bash)
 env:
   global:
-    secure: bGBzw+mOfhC/3/VY5+okKwOD8FfliC1JQ/9JiR8ZYk0YxeuSAwj8u8Bm++NbtKe41rANCrd5GztYpTlZb3R3/7tbbD3PlREsrh0X6qZckiRTvgJ8hT2kpBl4J1IDrLFG+MyBD6VGAC4oPtR0yRz4oe0vjSHyduycBahHaWLe6Pw=
+  - secure: OAPKbss8jCHAdeJBm91CzROSXYan7Tfowza8LLirP8CY3S4objfT2IbM9oOCxEIpTI3KfLnnMmzBcKzTAULHZJzDkQdmQOmO9FyyECD9ZIVP7Tov2+P0qLk6sVEKDn1EIudcPO/qaEytquQ/hQfDX1T6wB+5FRSSzBdzfIoSpG7h8w0iZK9KpGM1EMnYrhynE3OWcfyMkCneAWKYHRUKlTK7fxQWs7ciX0/hi/o9UVDIp7TfFDnLDBrcXIXzOD36QtAYsriAV+NSAp38IpgEwG5Nny/2bRFc4/SRxyeXmy0ZGQUK1vRtkdcCWOcdeqO/T33KcxKahS5Z92qR2kWw+8VjYonQJJpfJh4bXJh4KfFqhjstbbhW4/2F5j4N2tzTGhkWftNdHm2IM2ENLnPsoN0M0zU+pXbHFWdL1/GC1X1hNAqWWuK3L84Uuuk+fiV4HZq/1fw8PDsStf9dNi6TKh2gUIuYlWX21rZl3qkGJlXls5S45qGr4YkjWDDzt64SvZfm1wRu61e7wRx5PW3/IJhT91NO8768YWFLeokkU5al+5qU2k2j8uktd7zCpJp3HpebnTquXH0H+EMScMJXvJpC8joHZ3QUOyYLb3pIpLPU64Zexyjakjss7ChTpXCmGapbJA/YrjrgTvcgGpGOqa69NirhL2WUE5bAsusDmbw=
 cache:
   directories:
   - $HOME/.composer

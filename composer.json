@@ -1,41 +1,41 @@
 {
-    "name": "recoil/recoil",
-    "description": "Asynchronous coroutines for PHP 7.",
+    "name": "recoil/react",
+    "description": "Integrate Recoil with ReactPHP.",
     "require": {
         "php": "^7",
-        "icecave/repr": "^1",
         "react/event-loop": "^0.4",
         "react/promise": "^2",
-        "recoil/api": "dev-master"
+        "recoil/api": "dev-master",
+        "recoil/recoil": "dev-124-split-api as 0.6.0"
     },
     "require-dev": {
-        "ext-posix": "*",
         "eloquent/phony": "^0.13",
         "friendsofphp/php-cs-fixer": "^1",
         "hamcrest/hamcrest-php": "^2",
         "peridot-php/leo": "^1",
-        "peridot-php/peridot": "^1",
         "peridot-php/peridot-code-coverage-reporters": "^2",
-        "react/dns": "^0.4"
+        "peridot-php/peridot": "^1",
+        "recoil/dev": "dev-master"
     },
-    "autoload": { "psr-4": { "Recoil\\": "src" } },
+    "autoload": { "psr-4": { "Recoil\\React\\": "src" } },
     "autoload-dev": {
-        "psr-4": { "Recoil\\": "test/src" },
-        "files": [ "test/src/functional-tests.php" ]
+        "psr-4": { "Recoil\\React\\": "test/src" }
     },
     "keywords": [
-        "coroutine",
-        "generator",
-        "event",
         "async",
         "asynchronous",
-        "react",
+        "continuation",
+        "coroutine",
+        "event",
+        "generator",
         "green",
-        "thread",
         "multitasking",
-        "continuation"
+        "promise",
+        "react",
+        "react",
+        "thread"
     ],
-    "homepage": "https://github.com/recoilphp/recoil",
+    "homepage": "https://github.com/recoilphp/react",
     "license": "MIT",
     "authors": [
         {
