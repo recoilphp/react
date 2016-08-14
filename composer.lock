@@ -152,12 +152,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/recoilphp/api.git",
-                "reference": "b5b6580859dd6b1de8430dccc1924b3284bb7cf4"
+                "reference": "0941ad2f2b29bc5609c899fca3b6fe4a804d48a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/recoilphp/api/zipball/b5b6580859dd6b1de8430dccc1924b3284bb7cf4",
-                "reference": "b5b6580859dd6b1de8430dccc1924b3284bb7cf4",
+                "url": "https://api.github.com/repos/recoilphp/api/zipball/0941ad2f2b29bc5609c899fca3b6fe4a804d48a3",
+                "reference": "0941ad2f2b29bc5609c899fca3b6fe4a804d48a3",
                 "shasum": ""
             },
             "require": {
@@ -201,7 +201,7 @@
                 "multitasking",
                 "react"
             ],
-            "time": "2016-08-08 05:27:48"
+            "time": "2016-08-14 01:36:12"
         }
     ],
     "packages-dev": [

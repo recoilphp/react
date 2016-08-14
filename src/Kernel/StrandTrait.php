@@ -11,9 +11,9 @@ use Recoil\ApiCall;
 use Recoil\Awaitable;
 use Recoil\AwaitableProvider;
 use Recoil\CoroutineProvider;
+use Recoil\Exception\TerminatedException;
 use Recoil\Kernel\Exception\PrimaryListenerRemovedException;
 use Recoil\Kernel\Exception\StrandListenerException;
-use Recoil\Kernel\Exception\TerminatedException;
 use Recoil\Listener;
 use Recoil\Strand;
 use Recoil\StrandTrace;
@@ -350,7 +350,7 @@ trait StrandTrait
 
         $this->stack = [];
         $this->action = 'throw';
-        $this->value = new TerminatedException($this);
+        $this->value = TerminatedException::create($this);
 
         // Trace the exit. This is performed inside an assertion so that it can
         // be optimised away completely in production ...

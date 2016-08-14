@@ -8,7 +8,7 @@ use Eloquent\Phony\Phony;
 use Exception;
 use React\EventLoop\Factory;
 use React\EventLoop\LoopInterface;
-use Recoil\Exception\KernelPanicException;
+use Recoil\Exception\PanicException;
 use Recoil\Kernel\Api;
 use Recoil\React\Exception\KernelStoppedException;
 use Recoil\Recoil;
@@ -103,14 +103,14 @@ describe(ReactKernel::class, function () {
             $this->eventLoop->run->called();
         });
 
-        it('throws a KernelPanicException if the loop throws', function () {
+        it('throws a PanicException if the loop throws', function () {
             $exception = Phony::mock(Throwable::class)->get();
             $this->eventLoop->run->throws($exception);
 
             try {
                 $this->subject->run();
                 expect(false)->to->be->ok('expected exception was not thrown');
-            } catch (KernelPanicException $e) {
+            } catch (PanicException $e) {
                 expect($e->getPrevious() === $exception)->to->be->true;
             }
         });

@@ -6,9 +6,9 @@ namespace Recoil\React;
 
 use ErrorException;
 use React\EventLoop\LoopInterface;
+use Recoil\Exception\TimeoutException;
 use Recoil\Kernel\Api;
 use Recoil\Kernel\ApiTrait;
-use Recoil\Kernel\Exception\TimeoutException;
 use Recoil\Kernel\Strand;
 use Recoil\Kernel\SystemStrand;
 
@@ -346,7 +346,7 @@ final class ReactApi implements Api
                     }
 
                     $context->strand->throw(
-                        new TimeoutException($context->timeout)
+                        TimeoutException::create($context->timeout)
                     );
                 }
             );

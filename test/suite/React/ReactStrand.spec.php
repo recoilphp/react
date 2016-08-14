@@ -5,8 +5,8 @@ declare (strict_types = 1); // @codeCoverageIgnore
 namespace Recoil\React;
 
 use Eloquent\Phony\Phony;
+use Recoil\Exception\TerminatedException;
 use Recoil\Kernel\Api;
-use Recoil\Kernel\Exception\TerminatedException;
 use Recoil\Kernel\SystemKernel;
 use Throwable;
 
@@ -76,7 +76,7 @@ describe(ReactStrand::class, function () {
 
         $this->subject->terminate();
 
-        $reject->calledWith(new TerminatedException($this->subject));
+        $reject->calledWith(TerminatedException::create($this->subject));
     });
 
 });

@@ -7,8 +7,8 @@ namespace Recoil\React;
 use Eloquent\Phony\Phony;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\Timer\TimerInterface;
+use Recoil\Exception\TimeoutException;
 use Recoil\Kernel\Api;
-use Recoil\Kernel\Exception\TimeoutException;
 use Recoil\Kernel\Strand;
 use Recoil\Kernel\SystemStrand;
 use Throwable;
@@ -70,7 +70,7 @@ describe(StrandTimeout::class, function () {
             $this->subject->timeout();
 
             $this->strand->throw->calledWith(
-                new TimeoutException(20.5)
+                TimeoutException::create(20.5)
             );
         });
     });

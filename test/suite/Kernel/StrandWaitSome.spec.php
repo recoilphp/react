@@ -5,7 +5,7 @@ declare (strict_types = 1); // @codeCoverageIgnore
 namespace Recoil\Kernel;
 
 use Eloquent\Phony\Phony;
-use Recoil\Kernel\Exception\CompositeException;
+use Recoil\Exception\CompositeException;
 use Throwable;
 
 describe(StrandWaitSome::class, function () {
@@ -80,7 +80,7 @@ describe(StrandWaitSome::class, function () {
                 $this->substrand3->clearPrimaryListener->called(),
                 $this->substrand3->terminate->called(),
                 $this->strand->throw->calledWith(
-                    new CompositeException(
+                    CompositeException::create(
                         [
                             1 => $exception2->get(),
                             0 => $exception1->get(),

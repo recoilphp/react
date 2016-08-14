@@ -5,7 +5,7 @@ declare (strict_types = 1); // @codeCoverageIgnore
 namespace Recoil\Kernel;
 
 use Recoil\Awaitable;
-use Recoil\Kernel\Exception\CompositeException;
+use Recoil\Exception\CompositeException;
 use Recoil\Listener;
 use Recoil\Strand;
 use Throwable;
@@ -106,7 +106,7 @@ final class StrandWaitSome implements Awaitable, Listener
             }
 
             $this->listener->throw(
-                new CompositeException($this->exceptions)
+                CompositeException::create($this->exceptions)
             );
         }
     }

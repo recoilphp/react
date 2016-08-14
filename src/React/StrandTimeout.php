@@ -7,8 +7,8 @@ namespace Recoil\React;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\Timer\TimerInterface;
 use Recoil\Awaitable;
+use Recoil\Exception\TimeoutException;
 use Recoil\Kernel\Api;
-use Recoil\Kernel\Exception\TimeoutException;
 use Recoil\Kernel\SystemStrand;
 use Recoil\Listener;
 use Recoil\Strand;
@@ -110,7 +110,7 @@ final class StrandTimeout implements Awaitable, Listener
             $this->substrand->clearPrimaryListener();
             $this->substrand->terminate();
 
-            $this->listener->throw(new TimeoutException($this->timeout));
+            $this->listener->throw(TimeoutException::create($this->timeout));
         }
     }
 

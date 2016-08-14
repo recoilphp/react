@@ -13,9 +13,9 @@ use Recoil\ApiCall;
 use Recoil\Awaitable;
 use Recoil\AwaitableProvider;
 use Recoil\CoroutineProvider;
+use Recoil\Exception\TerminatedException;
 use Recoil\Kernel\Exception\PrimaryListenerRemovedException;
 use Recoil\Kernel\Exception\StrandListenerException;
-use Recoil\Kernel\Exception\TerminatedException;
 use Recoil\Listener;
 use Recoil\Strand;
 use Recoil\StrandTrace;
@@ -478,7 +478,7 @@ describe(StrandTrait::class, function () {
             $this->subject->get()->terminate();
 
             $this->primaryListener->throw->once()->calledWith(
-                new TerminatedException($this->subject->get()),
+                TerminatedException::create($this->subject->get()),
                 $this->subject
             );
         });
@@ -488,7 +488,7 @@ describe(StrandTrait::class, function () {
             $this->subject->get()->setPrimaryListener($this->primaryListener->get());
 
             $this->primaryListener->throw->once()->calledWith(
-                new TerminatedException($this->subject->get()),
+                TerminatedException::create($this->subject->get()),
                 $this->subject
             );
         });
@@ -498,7 +498,7 @@ describe(StrandTrait::class, function () {
             $this->subject->get()->await($this->listener2->get(), $this->api->get());
             $this->subject->get()->terminate();
 
-            $exception = new TerminatedException($this->subject->get());
+            $exception = TerminatedException::create($this->subject->get());
             $this->listener1->throw->calledWith($exception, $this->subject);
             $this->listener2->throw->calledWith($exception, $this->subject);
         });
@@ -693,7 +693,7 @@ describe(StrandTrait::class, function () {
             $strand = Phony::mock(Strand::class);
             $this->subject->get()->await($strand->get(), $this->api->get());
             $strand->throw->calledWith(
-                new TerminatedException($this->subject->get()),
+                TerminatedException::create($this->subject->get()),
                 $this->subject->get()
             );
         });
