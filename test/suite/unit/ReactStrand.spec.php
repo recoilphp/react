@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1); // @codeCoverageIgnore
+declare(strict_types=1); // @codeCoverageIgnore
 
 namespace Recoil\React;
 
@@ -11,7 +11,6 @@ use Recoil\Kernel\SystemKernel;
 use Throwable;
 
 describe(ReactStrand::class, function () {
-
     beforeEach(function () {
         $this->kernel = Phony::mock(SystemKernel::class);
         $this->api = Phony::mock(Api::class);
@@ -78,5 +77,4 @@ describe(ReactStrand::class, function () {
 
         $reject->calledWith(TerminatedException::create($this->subject));
     });
-
 });
