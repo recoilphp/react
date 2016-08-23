@@ -5,8 +5,8 @@
         "php": "^7",
         "react/event-loop": "^0.4",
         "react/promise": "^2",
-        "recoil/api": "dev-master",
-        "recoil/recoil": "dev-124-split-api#a9188bb"
+        "recoil/api": "^0.1",
+        "recoil/recoil": "dev-124-split-repos"
     },
     "require-dev": {
         "eloquent/phony": "^0.13",
@@ -15,7 +15,7 @@
         "peridot-php/leo": "^1",
         "peridot-php/peridot-code-coverage-reporters": "^2",
         "peridot-php/peridot": "^1",
-        "recoil/dev": "dev-124-split-repos"
+        "recoil/dev": "dev-master"
     },
     "autoload": { "psr-4": { "Recoil\\React\\": "src" } },
     "autoload-dev": { "psr-4": { "Recoil\\React\\": "test/src" } },
