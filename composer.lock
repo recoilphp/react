@@ -209,12 +209,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/recoilphp/recoil.git",
-                "reference": "b87810e3dcee722ff33a864cba442785cdf07391"
+                "reference": "110c9b0787b2f19d5a0b618361815e728d86a329"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/recoilphp/recoil/zipball/b87810e3dcee722ff33a864cba442785cdf07391",
-                "reference": "b87810e3dcee722ff33a864cba442785cdf07391",
+                "url": "https://api.github.com/repos/recoilphp/recoil/zipball/110c9b0787b2f19d5a0b618361815e728d86a329",
+                "reference": "110c9b0787b2f19d5a0b618361815e728d86a329",
                 "shasum": ""
             },
             "require": {
@@ -227,8 +227,9 @@
                 "friendsofphp/php-cs-fixer": "^1",
                 "hamcrest/hamcrest-php": "^2",
                 "peridot-php/leo": "^1",
-                "peridot-php/peridot": "^1",
+                "peridot-php/peridot": "dev-focused-specs-cli as 1.0.9999999999",
                 "peridot-php/peridot-code-coverage-reporters": "^2",
+                "phpunit/php-code-coverage": "dev-phpdbg-workaround as 2.2.9999999999",
                 "recoil/dev": "dev-master"
             },
             "type": "library",
@@ -262,7 +263,7 @@
                 "multitasking",
                 "react"
             ],
-            "time": "2016-11-30 03:00:10"
+            "time": "2016-12-07 03:45:50"
         }
     ],
     "packages-dev": [

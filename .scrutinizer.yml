@@ -1,6 +1,7 @@
 filter:
     excluded_paths:
         - 'test/*'
+        - 'examples/*'
 
 tools:
     php_code_sniffer:

@@ -6,53 +6,18 @@ namespace Recoil\React;
 
 use React\EventLoop\Factory;
 use React\EventLoop\LoopInterface;
-use Recoil\Exception\KernelException;
-use Recoil\Exception\PanicException;
-use Recoil\Exception\StrandException;
-use Recoil\Exception\TerminatedException;
 use Recoil\Kernel\Api;
+use Recoil\Kernel\KernelState;
+use Recoil\Kernel\KernelTrait;
 use Recoil\Kernel\SystemKernel;
-use Recoil\React\Exception\KernelStoppedException;
 use Recoil\Strand;
 use SplQueue;
-use Throwable;
 
 /**
  * A Recoil coroutine kernel based on a ReactPHP event loop.
  */
 final class ReactKernel implements SystemKernel
 {
-    /**
-     * Execute a coroutine on a new kernel.
-     *
-     * The kernel runs until the coroutine returns.
-     *
-     * @param mixed              $coroutine The coroutine to execute.
-     * @param LoopInterface|null $eventLoop The event loop to use (null = default).
-     *
-     * @return mixed                  The return value of the coroutine.
-     * @throws Throwable              The exception produced by the coroutine.
-     * @throws TerminatedException    The strand has been terminated.
-     * @throws KernelStoppedException The kernel was stopped before the strand exited.
-     * @throws PanicException         Some other strand has caused a kernel panic.
-     */
-    public static function start($coroutine, LoopInterface $eventLoop = null)
-    {
-        $kernel = self::create($eventLoop);
-        $listener = new StopListener($kernel);
-
-        $strand = $kernel->execute($coroutine);
-        $strand->setPrimaryListener($listener);
-
-        $kernel->run();
-
-        if ($listener->isDone) {
-            return $listener->get();
-        }
-
-        throw new KernelStoppedException();
-    }
-
     /**
      * Create a new kernel.
      *
@@ -68,51 +33,6 @@ final class ReactKernel implements SystemKernel
             $eventLoop,
             new ReactApi($eventLoop)
         );
-    }
-
-    /**
-     * Run the kernel until all strands exit, the kernel is stopped or a kernel
-     * panic occurs.
-     *
-     * A kernel panic occurs when an exception occurs that is not handled by the
-     * kernel's exception handler.
-     *
-     * This method returns immediately if the kernel is already running.
-     *
-     * @see Kernel::setExceptionHandler()
-     *
-     * @throws PanicException An unhandled exception has stopped the kernel.
-     */
-    public function run()
-    {
-        if ($this->isRunning) {
-            return;
-        } elseif (!$this->panicExceptions->isEmpty()) {
-            throw $this->panicExceptions->dequeue();
-        }
-
-        try {
-            $this->isRunning = true;
-            $this->eventLoop->run();
-        } catch (Throwable $e) {
-            $this->throw($e);
-        } finally {
-            $this->isRunning = false;
-        }
-
-        if (!$this->panicExceptions->isEmpty()) {
-            throw $this->panicExceptions->dequeue();
-        }
-    }
-
-    /**
-     * Stop the kernel.
-     */
-    public function stop()
-    {
-        if ($this->isRunning) {
-            $this->eventLoop->stop();
-        }
     }
 
     /**
@@ -137,32 +57,14 @@ final class ReactKernel implements SystemKernel
     }
 
     /**
-     * Set a user-defined exception handler function.
-     *
-     * The exception handler is invoked when a strand exits with an exception or
-     * an internal error occurs in the kernel.
-     *
-     * The handler function signature is:
-     *
-     *     function (PanicException $exception)
-     *
-     * For exceptions caused by a strand, $exception is an instance of
-     * {@see StrandException}; otherwise, it is a {@see KernelException}.
-     *
-     * {@see PanicException::getPrevious()} returns the exception that
-     * triggered the call to the exception handler.
-     *
-     * If the exception handler is unable to handle the exception it can simply
-     * re-throw it (or any other exception). This causes the kernel to panic and
-     * stop running. This is also the behaviour when no exception handler is set.
-     *
-     * @param callable|null $fn The exception handler (null = remove).
-     *
-     * @return null
+     * Stop the kernel.
      */
-    public function setExceptionHandler(callable $fn = null)
+    public function stop()
     {
-        $this->exceptionHandler = $fn;
+        if ($this->state === KernelState::RUNNING) {
+            $this->state = KernelState::STOPPING;
+            $this->eventLoop->stop();
+        }
     }
 
     /**
@@ -189,64 +91,18 @@ final class ReactKernel implements SystemKernel
     }
 
     /**
-     * Send the result of a successful operation.
+     * The kernel's main event loop. Invoked inside the run() method.
      *
-     * @param mixed       $value  The operation result.
-     * @param Strand|null $strand The strand that produced this result upon exit, if any.
+     * Loop must return when $this->state is KernelState::STOPPING.
+     *
+     * @return null
      */
-    public function send($value = null, Strand $strand = null)
+    protected function loop()
     {
-        assert(
-            $strand !== null && $strand->kernel() === $this,
-            'kernel can only handle notifications from its own strands'
-        );
+        $this->eventLoop->run();
     }
 
-    /**
-     * Send the result of an unsuccessful operation.
-     *
-     * @param Throwable   $exception The operation result.
-     * @param Strand|null $strand    The strand that produced this exception upon exit, if any.
-     */
-    public function throw(Throwable $exception, Strand $strand = null)
-    {
-        assert(
-            $strand === null || $strand->kernel() === $this,
-            'kernel can only handle notifications from its own strands'
-        );
-
-        // Termination is not an error ...
-        if (
-            $exception instanceof TerminatedException &&
-            $strand === $exception->strand()
-        ) {
-            return;
-        }
-
-        if ($strand === null) {
-            $exception = KernelException::create($exception);
-        } else {
-            $exception = StrandException::create($strand, $exception);
-        }
-
-        if ($this->exceptionHandler) {
-            try {
-                ($this->exceptionHandler)($exception);
-
-                return;
-            } catch (PanicException $e) {
-                $exception = $e;
-            } catch (Throwable $e) {
-                $exception = KernelException::create($e);
-            }
-        }
-
-        $this->panicExceptions->enqueue($exception);
-
-        if ($this->isRunning) {
-            $this->eventLoop->stop();
-        }
-    }
+    use KernelTrait;
 
     /**
      * @var LoopInterface The event loop.
@@ -254,27 +110,7 @@ final class ReactKernel implements SystemKernel
     private $eventLoop;
 
     /**
-     * @var Api The kernel API.
-     */
-    private $api;
-
-    /**
      * @var int The next strand ID.
      */
     private $nextId = 1;
-
-    /**
-     * @var bool True if the event loop is currently running.
-     */
-    private $isRunning = false;
-
-    /**
-     * @var callable|null The exception handler.
-     */
-    private $exceptionHandler;
-
-    /**
-     * @var SplQueue<PanicException> A queue of exceptions that caused the kernel to panic.
-     */
-    private $panicExceptions;
 }
