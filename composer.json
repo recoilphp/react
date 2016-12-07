@@ -6,7 +6,7 @@
         "react/event-loop": "^0.4",
         "react/promise": "^2",
         "recoil/api": "^0.1",
-        "recoil/recoil": "dev-124-split-repos"
+        "recoil/recoil": "dev-master"
     },
     "require-dev": {
         "eloquent/phony": "^0.13",
@@ -15,7 +15,7 @@
         "peridot-php/leo": "^1",
         "peridot-php/peridot-code-coverage-reporters": "^2",
         "peridot-php/peridot": "^1",
-        "recoil/dev": "dev-master"
+        "recoil/dev": "^0.1"
     },
     "autoload": { "psr-4": { "Recoil\\React\\": "src" } },
     "autoload-dev": { "psr-4": { "Recoil\\React\\": "test/src" } },
