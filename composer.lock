@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "16af0c797cc4af1c2b778561f1739664",
-    "content-hash": "f70db37c8a0d2aca410b6b2be71b2e0d",
+    "hash": "56d6b8b4c452b5b084e0f03d2e53724a",
+    "content-hash": "3c42d128ccd7ca2ef32c39fc2cea7da5",
     "packages": [
         {
             "name": "icecave/repr",
@@ -204,17 +204,17 @@
             "time": "2016-08-22 04:10:11"
         },
         {
-            "name": "recoil/recoil",
-            "version": "dev-master",
+            "name": "recoil/kernel",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/recoilphp/recoil.git",
-                "reference": "ed34cf7be0c01af46d81bd17a4a6af0f523b721f"
+                "url": "https://github.com/recoilphp/kernel.git",
+                "reference": "38ae384afbe8f840f2602c2525f32cf233d31a3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/recoilphp/recoil/zipball/ed34cf7be0c01af46d81bd17a4a6af0f523b721f",
-                "reference": "ed34cf7be0c01af46d81bd17a4a6af0f523b721f",
+                "url": "https://api.github.com/repos/recoilphp/kernel/zipball/38ae384afbe8f840f2602c2525f32cf233d31a3e",
+                "reference": "38ae384afbe8f840f2602c2525f32cf233d31a3e",
                 "shasum": ""
             },
             "require": {
@@ -223,19 +223,17 @@
                 "recoil/api": "^0.1"
             },
             "require-dev": {
-                "eloquent/phony": "^0.13",
+                "eloquent/phony": "^0.14",
                 "friendsofphp/php-cs-fixer": "^1",
                 "hamcrest/hamcrest-php": "^2",
                 "peridot-php/leo": "^1",
-                "peridot-php/peridot": "dev-focused-specs-cli as 1.0.9999999999",
-                "peridot-php/peridot-code-coverage-reporters": "^2",
-                "phpunit/php-code-coverage": "dev-phpdbg-workaround as 2.2.9999999999",
-                "recoil/dev": "dev-master"
+                "peridot-php/peridot": "^1",
+                "peridot-php/peridot-code-coverage-reporters": "^2"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Recoil\\": "src"
+                    "Recoil\\Kernel\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -249,8 +247,8 @@
                     "homepage": "https://github.com/jmalloc"
                 }
             ],
-            "description": "Asynchronous coroutines for PHP 7.",
-            "homepage": "https://github.com/recoilphp/recoil",
+            "description": "Reusable components for implementing Recoil kernels.",
+            "homepage": "https://github.com/recoilphp/kernel",
             "keywords": [
                 "Thread",
                 "async",
@@ -263,7 +261,7 @@
                 "multitasking",
                 "react"
             ],
-            "time": "2016-12-07 05:23:10"
+            "time": "2016-12-12 05:54:39"
         }
     ],
     "packages-dev": [
@@ -320,16 +318,16 @@
         },
         {
             "name": "eloquent/phony",
-            "version": "0.13.5",
+            "version": "0.14.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/eloquent/phony.git",
-                "reference": "42cb187e65f55c259e006982f51ae266132d4797"
+                "reference": "c6b42391a4ef418afa83078a2405242123f50c01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eloquent/phony/zipball/42cb187e65f55c259e006982f51ae266132d4797",
-                "reference": "42cb187e65f55c259e006982f51ae266132d4797",
+                "url": "https://api.github.com/repos/eloquent/phony/zipball/c6b42391a4ef418afa83078a2405242123f50c01",
+                "reference": "c6b42391a4ef418afa83078a2405242123f50c01",
                 "shasum": ""
             },
             "require": {
@@ -339,7 +337,7 @@
                 "athletic/athletic": "^0.1",
                 "counterpart/counterpart": "^1",
                 "danielstjules/pho": "^1",
-                "eloquent/asplode": "^2",
+                "errors/exceptions": "dev-master",
                 "ext-pdo": "*",
                 "friendsofphp/php-cs-fixer": "1.11.4",
                 "hamcrest/hamcrest-php": "^2",
@@ -391,7 +389,7 @@
                 "stubbing",
                 "test"
             ],
-            "time": "2016-09-20 00:27:59"
+            "time": "2016-12-07 06:02:42"
         },
         {
             "name": "evenement/evenement",
@@ -1078,16 +1076,16 @@
         },
         {
             "name": "recoil/dev",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/recoilphp/dev.git",
-                "reference": "3373a3fa575d4fb370395937724e037bf1fde3f9"
+                "reference": "0a9e1f51b4003ad3c26070a0988977974805775b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/recoilphp/dev/zipball/3373a3fa575d4fb370395937724e037bf1fde3f9",
-                "reference": "3373a3fa575d4fb370395937724e037bf1fde3f9",
+                "url": "https://api.github.com/repos/recoilphp/dev/zipball/0a9e1f51b4003ad3c26070a0988977974805775b",
+                "reference": "0a9e1f51b4003ad3c26070a0988977974805775b",
                 "shasum": ""
             },
             "require": {
@@ -1106,6 +1104,9 @@
                 "peridot-php/peridot-code-coverage-reporters": "^2",
                 "recoil/recoil": "dev-master#ed34cf7"
             },
+            "bin": [
+                "bin/recoil-instrument"
+            ],
             "type": "composer-plugin",
             "extra": {
                 "class": "Recoil\\Dev\\Composer\\Plugin"
@@ -1141,7 +1142,7 @@
                 "stack",
                 "trace"
             ],
-            "time": "2016-12-07 05:29:07"
+            "time": "2016-12-12 01:34:21"
         },
         {
             "name": "sebastian/diff",
@@ -1718,9 +1719,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "recoil/recoil": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
