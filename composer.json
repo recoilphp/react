@@ -6,7 +6,7 @@
         "react/event-loop": "^0.4",
         "react/promise": "^2",
         "recoil/api": "^0.1",
-        "recoil/kernel": "^0.1"
+        "recoil/kernel": "^0.2"
     },
     "require-dev": {
         "eloquent/phony": "^0.14",

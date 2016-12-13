@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "56d6b8b4c452b5b084e0f03d2e53724a",
-    "content-hash": "3c42d128ccd7ca2ef32c39fc2cea7da5",
+    "hash": "e596061eae4f9fe5af1ef6427c9ac3fc",
+    "content-hash": "4a4bc0bec4da47b8af87e3507662950f",
     "packages": [
         {
             "name": "icecave/repr",
@@ -205,16 +205,16 @@
         },
         {
             "name": "recoil/kernel",
-            "version": "0.1.0",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/recoilphp/kernel.git",
-                "reference": "38ae384afbe8f840f2602c2525f32cf233d31a3e"
+                "reference": "970cfc4186b3bcb6f85c2e420eb43c455fd2aeef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/recoilphp/kernel/zipball/38ae384afbe8f840f2602c2525f32cf233d31a3e",
-                "reference": "38ae384afbe8f840f2602c2525f32cf233d31a3e",
+                "url": "https://api.github.com/repos/recoilphp/kernel/zipball/970cfc4186b3bcb6f85c2e420eb43c455fd2aeef",
+                "reference": "970cfc4186b3bcb6f85c2e420eb43c455fd2aeef",
                 "shasum": ""
             },
             "require": {
@@ -261,7 +261,7 @@
                 "multitasking",
                 "react"
             ],
-            "time": "2016-12-12 05:54:39"
+            "time": "2016-12-13 00:45:37"
         }
     ],
     "packages-dev": [
