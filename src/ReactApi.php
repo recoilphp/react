@@ -225,6 +225,47 @@ final class ReactApi implements Api
     }
 
     /**
+     * Wait for one or more streams to become readable or writable.
+     *
+     * @see Recoil::select() for the full specification.
+     *
+     * @param SystemStrand    $strand The strand executing the API call.
+     * @param array<resource> $read   The set of readable streams.
+     * @param array<resource> $read   The set of writable streams.
+     *
+     * @return Generator|null
+     */
+    public function select(SystemStrand $strand, array $read, array $write)
+    {
+        $done = function () use ($read, $write) {
+            foreach ($read as $stream) {
+                $this->eventLoop->removeReadStream($stream);
+            }
+            foreach ($write as $stream) {
+                $this->eventLoop->removeWriteStream($stream);
+            }
+        };
+
+        $readFn = function ($stream) use ($done, $strand) {
+            $done();
+            $strand->send([[$stream], []]);
+        };
+        foreach ($read as $stream) {
+            $this->eventLoop->addReadStream($stream, $readFn);
+        }
+
+        $writeFn = function ($stream) use ($done, $strand) {
+            $done();
+            $strand->send([[], [$stream]]);
+        };
+        foreach ($write as $stream) {
+            $this->eventLoop->addWriteStream($stream, $writeFn);
+        }
+
+        $strand->setTerminator($done);
+    }
+
+    /**
      * Get the event loop.
      *
      * This is operation is NON-COOPERATIVE.
