@@ -7,7 +7,6 @@ php:
 matrix:
   fast_finish: true
   allow_failures:
-  - php: '7.1'
   - php: nightly
 before_install:
 - phpenv config-rm xdebug.ini || true
@@ -17,7 +16,7 @@ script: make ci
 after_script: bash <(curl -s https://codecov.io/bash)
 env:
   global:
-  - secure: OAPKbss8jCHAdeJBm91CzROSXYan7Tfowza8LLirP8CY3S4objfT2IbM9oOCxEIpTI3KfLnnMmzBcKzTAULHZJzDkQdmQOmO9FyyECD9ZIVP7Tov2+P0qLk6sVEKDn1EIudcPO/qaEytquQ/hQfDX1T6wB+5FRSSzBdzfIoSpG7h8w0iZK9KpGM1EMnYrhynE3OWcfyMkCneAWKYHRUKlTK7fxQWs7ciX0/hi/o9UVDIp7TfFDnLDBrcXIXzOD36QtAYsriAV+NSAp38IpgEwG5Nny/2bRFc4/SRxyeXmy0ZGQUK1vRtkdcCWOcdeqO/T33KcxKahS5Z92qR2kWw+8VjYonQJJpfJh4bXJh4KfFqhjstbbhW4/2F5j4N2tzTGhkWftNdHm2IM2ENLnPsoN0M0zU+pXbHFWdL1/GC1X1hNAqWWuK3L84Uuuk+fiV4HZq/1fw8PDsStf9dNi6TKh2gUIuYlWX21rZl3qkGJlXls5S45qGr4YkjWDDzt64SvZfm1wRu61e7wRx5PW3/IJhT91NO8768YWFLeokkU5al+5qU2k2j8uktd7zCpJp3HpebnTquXH0H+EMScMJXvJpC8joHZ3QUOyYLb3pIpLPU64Zexyjakjss7ChTpXCmGapbJA/YrjrgTvcgGpGOqa69NirhL2WUE5bAsusDmbw=
+    secure: YTiIrP7lYkENSKsX2h290b/q1F7uvsekkdTSDHGSiKkpx0VAzfT0VRdICPyVtzus1V4l5BZXT12Bcb2dahEG1+nF2f4aNrx46+YjENAG2xn5SW96G04Xajxc5r4YOSkbcNYtFaQBuryoZTm4YYJWXtvf/dZBgAlvIcGzFWpGE7ijXZVj6zDuY+3O+uu/BIdySUcinT4lbNpxjX+33eXvWbePg4yZ2eoOX99q2stTxW8JmuRYalxKgReQZDzMVXJNYFkpQhvCfsuVvifp7BqD58bW1LlojFP1SG84syeA1Q11/YqWsePBOlCJsKBsnXijAs//wHC2S9sR4OqQSU5bRzsnhGsJ5hmJ+MdijGTs9+QojnxDwx1K5q4U3pE1nrocXkJ72AawJUn2IgjOtCyW/P4K85z54qLblfAsPXRi6j+G/VdntwqPaH63dDQoHbSQJMODUZYedV+eiG7OPagdN7+Jn+S2IEjgJMmdHw8SG2gKSZFvxWYx69L1tjzcoEGdScGCczgdmjm3pOrauuse2qm1KOLFzp3GweP+32SIoFFn3C4xR28N2OFjGDx/qVQJVusZcP24CWpr0UxnBgkE4co+HE/b479hHnbD0ug2sCj4buDlx/2RAUhTk9qttWfd2DM6t55IHPRQEi/d30JQZPL4Y6x2bJhmXYDVybxuRr8=
 cache:
   directories:
   - $HOME/.composer
