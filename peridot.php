@@ -6,7 +6,7 @@ use Evenement\EventEmitterInterface;
 use Peridot\Console\Environment;
 use Peridot\Reporter\CodeCoverage\AbstractCodeCoverageReporter;
 use Peridot\Reporter\CodeCoverageReporters;
-use Recoil\Dev\Peridot\Scope;
+use Recoil\Dev\Peridot\PlugIn;
 use Recoil\React\ReactKernel;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -14,7 +14,7 @@ require __DIR__ . '/vendor/autoload.php';
 return function (EventEmitterInterface $emitter) {
     (new CodeCoverageReporters($emitter))->register();
 
-    Scope::install($emitter, function () {
+    PlugIn::install($emitter, function () {
         return ReactKernel::create();
     });
 
