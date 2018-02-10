@@ -8,7 +8,6 @@ use Eloquent\Phony\Phony;
 use Hamcrest\Core\IsInstanceOf;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\Timer\TimerInterface;
-use Recoil\Kernel;
 use Recoil\Kernel\SystemKernel;
 use Recoil\Kernel\SystemStrand;
 use Recoil\Strand;

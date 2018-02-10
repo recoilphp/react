@@ -54,7 +54,7 @@ final class StreamQueue
      *
      * @return callable A function that removes the callback from the queue.
      */
-    public function read($stream, callable $callback) : callable
+    public function read($stream, callable $callback): callable
     {
         assert(\is_resource($stream));
 
@@ -91,7 +91,7 @@ final class StreamQueue
      *
      * @return callable A function that removes the callback from the queue.
      */
-    public function write($stream, callable $callback) : callable
+    public function write($stream, callable $callback): callable
     {
         assert(\is_resource($stream));
 

@@ -8,7 +8,8 @@ coverage: artifacts/tests/coverage/index.html
 coverage-open: artifacts/tests/coverage/index.html
 	open artifacts/tests/coverage/index.html
 
-lint: | vendor
+lint: $(SOURCE) | vendor
+	@mkdir -p artifacts/
 	vendor/bin/php-cs-fixer fix
 
 prepare: lint coverage
@@ -16,6 +17,7 @@ prepare: lint coverage
 	travis lint
 
 ci: lint artifacts/tests/coverage/clover.xml
+	php -c test/etc/php.ini -d zend.assertions=-1 vendor/bin/peridot
 
 .PHONY: FORCE test coverage coverage-open lint prepare ci
 
