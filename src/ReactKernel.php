@@ -23,7 +23,7 @@ final class ReactKernel implements SystemKernel
      *
      * @param LoopInterface|null $eventLoop The event loop to use (null = default).
      */
-    public static function create(LoopInterface $eventLoop = null) : self
+    public static function create(LoopInterface $eventLoop = null): self
     {
         if ($eventLoop === null) {
             $eventLoop = Factory::create();
@@ -43,7 +43,7 @@ final class ReactKernel implements SystemKernel
      *
      * @param mixed $coroutine The coroutine to execute.
      */
-    public function execute($coroutine) : Strand
+    public function execute($coroutine): Strand
     {
         $strand = new ReactStrand($this, $this->api, $this->nextId++, $coroutine);
 

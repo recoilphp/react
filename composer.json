@@ -10,7 +10,7 @@
     },
     "require-dev": {
         "eloquent/phony": "^2",
-        "friendsofphp/php-cs-fixer": "^1",
+        "friendsofphp/php-cs-fixer": "^2",
         "hamcrest/hamcrest-php": "^2",
         "peridot-php/leo": "^1",
         "peridot-php/peridot-code-coverage-reporters": "^2",
