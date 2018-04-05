@@ -186,6 +186,12 @@ final class ReactApi implements Api
             $length = $bufferLength;
         }
 
+        if ($length == 0) {
+            $strand->send();
+
+            return;
+        }
+
         $done = null;
         $done = $this->streamQueue->write(
             $stream,
@@ -197,7 +203,9 @@ final class ReactApi implements Api
             ) {
                 $bytes = @\fwrite($stream, $buffer, $length);
 
-                if ($bytes === false) {
+                // zero and false both indicate an error
+                // http://php.net/manual/en/function.fwrite.php#96951
+                if ($bytes === 0 || $bytes === false) {
                     // @codeCoverageIgnoreStart
                     $done();
                     $error = \error_get_last();

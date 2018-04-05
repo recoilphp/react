@@ -5,7 +5,6 @@ declare(strict_types=1); // @codeCoverageIgnore
 namespace Recoil\React;
 
 use Eloquent\Phony\Phony;
-use React\EventLoop\Factory;
 use React\EventLoop\LoopInterface;
 use Recoil\Kernel\Api;
 use Throwable;
@@ -22,7 +21,7 @@ describe(ReactKernel::class, function () {
     });
 
     describe('::create()', function () {
-        it('can be called without a loop', function() {
+        it('can be called without a loop', function () {
             $kernel = ReactKernel::create();
             expect($kernel)->to->be->an->instanceof(ReactKernel::class);
         });
