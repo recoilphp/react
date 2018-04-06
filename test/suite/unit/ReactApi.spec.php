@@ -7,10 +7,14 @@ namespace Recoil\React;
 use Eloquent\Phony\Phony;
 use Hamcrest\Core\IsInstanceOf;
 use React\EventLoop\LoopInterface;
-use React\EventLoop\Timer\TimerInterface;
+use React\EventLoop\TimerInterface;
 use Recoil\Kernel\SystemKernel;
 use Recoil\Kernel\SystemStrand;
 use Recoil\Strand;
+
+if (!interface_exists('React\EventLoop\TimerInterface') && interface_exists('React\EventLoop\Timer\TimerInterface')) {
+    class_alias('React\EventLoop\Timer\TimerInterface', 'React\EventLoop\TimerInterface');
+}
 
 describe(ReactApi::class, function () {
     beforeEach(function () {
@@ -72,9 +76,9 @@ describe(ReactApi::class, function () {
             $cancel = $this->strand->setTerminator->called()->firstCall()->argument();
             expect($cancel)->to->satisfy('is_callable');
 
-            $this->timer->cancel->never()->called();
+            $this->eventLoop->cancelTimer->never()->called();
             $cancel();
-            $this->timer->cancel->called();
+            $this->eventLoop->cancelTimer->called();
         });
 
         it('uses future tick instead of a timer when passed zero seconds', function () {
