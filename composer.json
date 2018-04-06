@@ -18,7 +18,10 @@
         "recoil/dev": "^0.3"
     },
     "autoload": { "psr-4": { "Recoil\\React\\": "src" } },
-    "autoload-dev": { "psr-4": { "Recoil\\React\\": "test/src" } },
+    "autoload-dev": {
+        "psr-4": { "Recoil\\React\\": "test/src" },
+        "files": ["test/src/compatibility.php"]
+    },
     "keywords": [
         "async",
         "asynchronous",

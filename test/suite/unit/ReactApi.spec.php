@@ -12,10 +12,6 @@ use Recoil\Kernel\SystemKernel;
 use Recoil\Kernel\SystemStrand;
 use Recoil\Strand;
 
-if (!interface_exists('React\EventLoop\TimerInterface') && interface_exists('React\EventLoop\Timer\TimerInterface')) {
-    class_alias('React\EventLoop\Timer\TimerInterface', 'React\EventLoop\TimerInterface');
-}
-
 describe(ReactApi::class, function () {
     beforeEach(function () {
         $this->eventLoop = Phony::mock(LoopInterface::class);
