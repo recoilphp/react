@@ -174,5 +174,34 @@ describe(StreamQueue::class, function () {
                 $spy2->calledWith($this->writeStream);
             });
         });
+
+        context('when the stream is a pipe', function () {
+            beforeEach(function () {
+                $this->pipe = tempnam(sys_get_temp_dir(), "recoil-test-pipe");
+                unlink($this->pipe);
+                posix_mkfifo($this->pipe, 0600);
+            });
+
+            afterEach(function() {
+                unlink($this->pipe);
+            });
+
+            it('throws an exception if the remote end is closed', function () {
+                $read = fopen($this->pipe, 'r+'); // '+' so it won't wait for a reader
+                stream_set_blocking($read, false);
+
+                $write = fopen($this->pipe, 'w');
+                stream_set_blocking($write, false);
+
+                fclose($read);
+
+                try {
+                    yield "x" => $write;
+                } catch (\RuntimeException $e) {
+                }
+
+                expect($e)->not->to->be->null;
+            });
+        });
     });
 });

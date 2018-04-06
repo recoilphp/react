@@ -10,6 +10,7 @@ use Recoil\Kernel\Api;
 use Recoil\Kernel\ApiTrait;
 use Recoil\Kernel\Strand;
 use Recoil\Kernel\SystemStrand;
+use RuntimeException;
 
 /**
  * A kernel API based on the React event loop.
@@ -204,14 +205,23 @@ final class ReactApi implements Api
                 \error_clear_last();
                 $bytes = @\fwrite($stream, $buffer, $length);
 
-                // zero and false both indicate an error
+                // Zero is returned by fwrite() when a stream error occurs, such
+                // as EPIPE. We *assume* that all of React's event loop
+                // implementations only call the write callback when the stream
+                // buffer is (partially) drained and hence the 0 does not
+                // indicate a genuine short-write.
+                //
+                // Furthermore, when 0 is used to indicate an error, fwrite()
+                // does not produce any PHP error, so we can not be sure what
+                // exactly went wrong.
+                //
                 // http://php.net/manual/en/function.fwrite.php#96951
                 if ($bytes === 0 || $bytes === false) {
-                    // @codeCoverageIgnoreStart
                     $done();
                     $error = \error_get_last();
 
                     if ($error !== null) {
+                        // @codeCoverageIgnoreStart
                         $strand->throw(
                             new ErrorException(
                                 $error['message'],
@@ -221,16 +231,15 @@ final class ReactApi implements Api
                                 $error['line']
                             )
                         );
+                        // @codeCoverageIgnoreEnd
                     } else {
-                        $strand->throw(
-                            new ErrorException(
-                                'Stream write error',
-                                0,
-                                1 // severity
-                            )
-                        );
+                        $md = \stream_get_meta_data($stream);
+                        $message = 'an unknown error has occurred writing to ' . $md['uri'];
+                        if (!$md["seekable"]) {
+                            $message .= ', the remote end may have closed the connection';
+                        }
+                        $strand->throw(new RuntimeException($message));
                     }
-                    // @codeCoverageIgnoreEnd
                 } elseif ($bytes === $length) {
                     $done();
                     $strand->send();
