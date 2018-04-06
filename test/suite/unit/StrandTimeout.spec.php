@@ -6,12 +6,16 @@ namespace Recoil\React;
 
 use Eloquent\Phony\Phony;
 use React\EventLoop\LoopInterface;
-use React\EventLoop\Timer\TimerInterface;
+use React\EventLoop\TimerInterface;
 use Recoil\Exception\TimeoutException;
 use Recoil\Kernel\Api;
 use Recoil\Kernel\Strand;
 use Recoil\Kernel\SystemStrand;
 use Throwable;
+
+if (!interface_exists('React\EventLoop\TimerInterface') && interface_exists('React\EventLoop\Timer\TimerInterface')) {
+    class_alias('React\EventLoop\Timer\TimerInterface', 'React\EventLoop\TimerInterface');
+}
 
 describe(StrandTimeout::class, function () {
     beforeEach(function () {
@@ -53,7 +57,7 @@ describe(StrandTimeout::class, function () {
 
             $this->subject->send('<ok>', $this->substrand->get());
 
-            $this->timer->cancel->called();
+            $this->loop->cancelTimer->called();
             $this->strand->send->calledWith('<ok>');
         });
 
@@ -61,7 +65,7 @@ describe(StrandTimeout::class, function () {
             $exception = Phony::mock(Throwable::class);
             $this->subject->throw($exception->get(), $this->substrand->get());
 
-            $this->timer->cancel->called();
+            $this->loop->cancelTimer->called();
             $this->strand->throw->calledWith($exception);
         });
 

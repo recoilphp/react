@@ -69,7 +69,7 @@ final class StrandTimeout implements Awaitable, Listener
         assert($this->substrand === $strand, 'unknown strand');
 
         $this->substrand = null;
-        $this->timer->cancel();
+        $this->eventLoop->cancelTimer($this->timer);
         $this->listener->send($value);
     }
 
@@ -84,7 +84,7 @@ final class StrandTimeout implements Awaitable, Listener
         assert($this->substrand === $strand, 'unknown strand');
 
         $this->substrand = null;
-        $this->timer->cancel();
+        $this->eventLoop->cancelTimer($this->timer);
         $this->listener->throw($exception);
     }
 
@@ -94,7 +94,7 @@ final class StrandTimeout implements Awaitable, Listener
     public function cancel()
     {
         if ($this->substrand) {
-            $this->timer->cancel();
+            $this->eventLoop->cancelTimer($this->timer);
             $this->substrand->clearPrimaryListener();
             $this->substrand->terminate();
         }
