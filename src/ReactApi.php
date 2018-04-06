@@ -201,6 +201,7 @@ final class ReactApi implements Api
                 &$buffer,
                 &$length
             ) {
+                \error_clear_last();
                 $bytes = @\fwrite($stream, $buffer, $length);
 
                 // zero and false both indicate an error
@@ -209,15 +210,26 @@ final class ReactApi implements Api
                     // @codeCoverageIgnoreStart
                     $done();
                     $error = \error_get_last();
-                    $strand->throw(
-                        new ErrorException(
-                            $error['message'],
-                            $error['type'],
-                            1, // severity
-                            $error['file'],
-                            $error['line']
-                        )
-                    );
+
+                    if ($error !== null) {
+                        $strand->throw(
+                            new ErrorException(
+                                $error['message'],
+                                $error['type'],
+                                1, // severity
+                                $error['file'],
+                                $error['line']
+                            )
+                        );
+                    } else {
+                        $strand->throw(
+                            new ErrorException(
+                                'Stream write error',
+                                0,
+                                1 // severity
+                            )
+                        );
+                    }
                     // @codeCoverageIgnoreEnd
                 } elseif ($bytes === $length) {
                     $done();
