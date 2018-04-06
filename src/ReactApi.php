@@ -235,7 +235,7 @@ final class ReactApi implements Api
                     } else {
                         $md = \stream_get_meta_data($stream);
                         $message = 'an unknown error has occurred writing to ' . $md['uri'];
-                        if (!$md["seekable"]) {
+                        if (!$md['seekable']) {
                             $message .= ', the remote end may have closed the connection';
                         }
                         $strand->throw(new RuntimeException($message));

@@ -177,12 +177,12 @@ describe(StreamQueue::class, function () {
 
         context('when the stream is a pipe', function () {
             beforeEach(function () {
-                $this->pipe = tempnam(sys_get_temp_dir(), "recoil-test-pipe");
+                $this->pipe = tempnam(sys_get_temp_dir(), 'recoil-test-pipe');
                 unlink($this->pipe);
                 posix_mkfifo($this->pipe, 0600);
             });
 
-            afterEach(function() {
+            afterEach(function () {
                 unlink($this->pipe);
             });
 
@@ -196,7 +196,7 @@ describe(StreamQueue::class, function () {
                 fclose($read);
 
                 try {
-                    yield "x" => $write;
+                    yield 'x' => $write;
                 } catch (\RuntimeException $e) {
                 }
 
