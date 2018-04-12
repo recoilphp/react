@@ -217,11 +217,11 @@ final class ReactApi implements Api
                 //
                 // http://php.net/manual/en/function.fwrite.php#96951
                 if ($bytes === 0 || $bytes === false) {
+                    // @codeCoverageIgnoreStart
                     $done();
                     $error = \error_get_last();
 
                     if ($error !== null) {
-                        // @codeCoverageIgnoreStart
                         $strand->throw(
                             new ErrorException(
                                 $error['message'],
@@ -231,7 +231,6 @@ final class ReactApi implements Api
                                 $error['line']
                             )
                         );
-                        // @codeCoverageIgnoreEnd
                     } else {
                         $md = \stream_get_meta_data($stream);
                         $message = 'an unknown error has occurred writing to ' . $md['uri'];
@@ -240,6 +239,7 @@ final class ReactApi implements Api
                         }
                         $strand->throw(new RuntimeException($message));
                     }
+                    // @codeCoverageIgnoreEnd
                 } elseif ($bytes === $length) {
                     $done();
                     $strand->send();

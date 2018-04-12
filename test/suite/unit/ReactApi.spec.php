@@ -137,4 +137,41 @@ describe(ReactApi::class, function () {
             $this->strand->send->calledWith($this->eventLoop);
         });
     });
+
+    describe('->write()', function () {
+        context('when the stream is a pipe', function () {
+            beforeEach(function () {
+                $this->pipe = tempnam(sys_get_temp_dir(), 'recoil-test-pipe');
+                unlink($this->pipe);
+                posix_mkfifo($this->pipe, 0600);
+            });
+
+            afterEach(function () {
+                unlink($this->pipe);
+            });
+
+            // FIXME: This test is currently disabled when running under phpdbg
+            // (and hence when building coverage).
+            //
+            // The call to fwrite() in ReactApi::write() causes the interpreter
+            // to crash under phpdbg when the remote end of the pipe is closed.
+            (PHP_SAPI === 'phpdbg' ? 'xit' : 'it')('throws an exception if the remote end is closed', function () {
+                $read = fopen($this->pipe, 'r+'); // '+' so it won't wait for a reader
+
+                $write = fopen($this->pipe, 'w');
+                stream_set_blocking($write, false);
+
+                fclose($read);
+
+                $e = null;
+
+                try {
+                    yield 'x' => $write;
+                } catch (\RuntimeException $e) {
+                }
+
+                expect($e)->not->to->be->null;
+            });
+        });
+    });
 });
