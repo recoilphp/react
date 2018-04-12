@@ -25,7 +25,7 @@ describe(StreamQueue::class, function () {
             $this->eventLoop->addReadStream->calledWith($this->readStream, '~');
         });
 
-        it('only adds the stream to the event loop one', function () {
+        it('only adds the stream to the event loop once', function () {
             $this->subject->read($this->readStream, function () {
             });
             $this->subject->read($this->readStream, function () {
@@ -104,7 +104,7 @@ describe(StreamQueue::class, function () {
             $this->eventLoop->addWriteStream->calledWith($this->writeStream, '~');
         });
 
-        it('only adds the stream to the event loop one', function () {
+        it('only adds the stream to the event loop once', function () {
             $this->subject->write($this->writeStream, function () {
             });
             $this->subject->write($this->writeStream, function () {
