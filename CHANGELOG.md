@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2 (2018-04-30)
+
+- **[FIX]** Handle `fwrite()` error conditions that do not produce a PHP error (thanks [@tsufeki](https://github.com/tsufeki))
+- **[IMPROVED]** Add support for [`react/event-loop`](https://github.com/reactphp/event-loop) v0.5 (thanks [@WyriHaximus](https://github.com/WyriHaximus))
+
 ## 1.0.1 (2018-04-06)
 
 - **[FIX]** Handle `fwrite()` error conditions indicated by `0` return value ([#6](https://github.com/recoilphp/react#6))
