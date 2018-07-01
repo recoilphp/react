@@ -11,13 +11,13 @@ matrix:
   - php: nightly
 before_install:
 - phpenv config-rm xdebug.ini || true
-- composer config --global github-oauth.github.com $GITHUB_TOKEN
+- "[[ $GITHUB_TOKEN ]] && composer config --global github-oauth.github.com $GITHUB_TOKEN"
 install: composer install --no-interaction
 script: make ci
 after_script: bash <(curl -s https://codecov.io/bash)
 env:
   global:
-    secure: YTiIrP7lYkENSKsX2h290b/q1F7uvsekkdTSDHGSiKkpx0VAzfT0VRdICPyVtzus1V4l5BZXT12Bcb2dahEG1+nF2f4aNrx46+YjENAG2xn5SW96G04Xajxc5r4YOSkbcNYtFaQBuryoZTm4YYJWXtvf/dZBgAlvIcGzFWpGE7ijXZVj6zDuY+3O+uu/BIdySUcinT4lbNpxjX+33eXvWbePg4yZ2eoOX99q2stTxW8JmuRYalxKgReQZDzMVXJNYFkpQhvCfsuVvifp7BqD58bW1LlojFP1SG84syeA1Q11/YqWsePBOlCJsKBsnXijAs//wHC2S9sR4OqQSU5bRzsnhGsJ5hmJ+MdijGTs9+QojnxDwx1K5q4U3pE1nrocXkJ72AawJUn2IgjOtCyW/P4K85z54qLblfAsPXRi6j+G/VdntwqPaH63dDQoHbSQJMODUZYedV+eiG7OPagdN7+Jn+S2IEjgJMmdHw8SG2gKSZFvxWYx69L1tjzcoEGdScGCczgdmjm3pOrauuse2qm1KOLFzp3GweP+32SIoFFn3C4xR28N2OFjGDx/qVQJVusZcP24CWpr0UxnBgkE4co+HE/b479hHnbD0ug2sCj4buDlx/2RAUhTk9qttWfd2DM6t55IHPRQEi/d30JQZPL4Y6x2bJhmXYDVybxuRr8=
+    secure: cfB5IzcJsgv0F76yDnNM7NnoMaoYQZLkpiZMv5c/jnV/zz+O4t02OhfatllrJPxdnJgxtqpSJlMkErGmmiuDAG1Oh3TuHzzeaHfdeKwT72Ub82PW5ReiZR0ecYEAQKLyfzNuSzliG/5/wAXtKVOZNglq5X0D/1upeJSNxVb/Ui09sC2aHsoTWpKajcqaVrkXWr4GH6JSSav8ZwJ62fXXSkR9vCjXhDnoUvkktQrvB1mknM8HcQnl4gOJN3+vguB7Lk6f6V9YT3JDMRskfTUAjErii7A+jnxsR8vYxGuJ8pmpTAANyFyKSE4Ju/kgKFDtrOJfzmhDpfUSy3QW+8PTt+TYxycdyc7DKyJrEzlTu82EfdYwgPtEFnsQIrRGZunWrl3N9dE9XDbMA+yPDVlFztbZOo98ZeWwfYIAn818G6aNwhlBYRHKvv9mwCa2AZD9Rhh2an3nyaIuM7pCVGncaOdXNgKTkhKbydjX3l2BdArAeJ3g5aATbnY7RNcolSqoLgOpS9WXPSacrBMMgg3kmH2XZSAjFq+tVLfUmk15YUdMPfSa+O7oXavYm6NktJeNKjIuZxxBkIQpacc09CufM9mDDE5CCStev2osysk04h+5j7U/AjPjN4cEzvHpvX1YSitGSdjWxiaWq4vxeVVeDneS6hJwTLt7H0QVjBNHVzU=
 cache:
   directories:
-  - $HOME/.composer
+  - "$HOME/.composer/cache/files"
