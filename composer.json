@@ -2,14 +2,14 @@
     "name": "recoil/react",
     "description": "Integrate Recoil with ReactPHP.",
     "require": {
-        "php": "^7",
+        "php": "^7.1",
         "react/event-loop": "^1.0 || ^0.5 || ^0.4",
         "react/promise": "^2",
         "recoil/api": "^1",
         "recoil/kernel": "^1"
     },
     "require-dev": {
-        "eloquent/phony": "^2",
+        "eloquent/phony": "^3",
         "friendsofphp/php-cs-fixer": "^2",
         "hamcrest/hamcrest-php": "^2",
         "peridot-php/leo": "^1",
@@ -48,7 +48,7 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "7.0"
+            "php": "7.1"
         }
     }
 }
