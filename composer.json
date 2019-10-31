@@ -15,7 +15,7 @@
         "peridot-php/leo": "^1",
         "peridot-php/peridot-code-coverage-reporters": "^2",
         "peridot-php/peridot": "^1",
-        "recoil/dev": "^0.3"
+        "recoil/dev": "^0.3.5"
     },
     "autoload": { "psr-4": { "Recoil\\React\\": "src" } },
     "autoload-dev": {

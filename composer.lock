@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1ce19c537d948d4be9f6c08ba7360792",
+    "content-hash": "95056961a3e6577e22547b06a9d786fb",
     "packages": [
         {
             "name": "icecave/repr",
@@ -1434,16 +1434,16 @@
         },
         {
             "name": "recoil/dev",
-            "version": "0.3.4",
+            "version": "0.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/recoilphp/dev.git",
-                "reference": "fb2d2032df42f669d28ad923767384b49228802a"
+                "reference": "aa381033687ad0c2808ab938f683f19c2285f03c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/recoilphp/dev/zipball/fb2d2032df42f669d28ad923767384b49228802a",
-                "reference": "fb2d2032df42f669d28ad923767384b49228802a",
+                "url": "https://api.github.com/repos/recoilphp/dev/zipball/aa381033687ad0c2808ab938f683f19c2285f03c",
+                "reference": "aa381033687ad0c2808ab938f683f19c2285f03c",
                 "shasum": ""
             },
             "require": {
@@ -1451,13 +1451,13 @@
                 "eloquent/enumeration": "^5",
                 "hamcrest/hamcrest-php": "^2",
                 "nikic/php-parser": "^3",
-                "php": "^7",
+                "php": "^7.1",
                 "recoil/api": "^1"
             },
             "require-dev": {
                 "composer/composer": "1.0.0",
-                "eloquent/phony": "^2",
-                "friendsofphp/php-cs-fixer": "^1",
+                "eloquent/phony": "^3.2",
+                "friendsofphp/php-cs-fixer": "^2",
                 "peridot-php/leo": "^1",
                 "peridot-php/peridot": "^1",
                 "peridot-php/peridot-code-coverage-reporters": "^2",
@@ -1498,7 +1498,7 @@
                 "stack",
                 "trace"
             ],
-            "time": "2017-12-13T01:20:33+00:00"
+            "time": "2019-10-31T08:09:07+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
