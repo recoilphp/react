@@ -5,7 +5,7 @@
 [![Code Quality](https://img.shields.io/scrutinizer/g/recoilphp/react/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/recoilphp/react/)
 [![Latest Version](http://img.shields.io/packagist/v/recoil/react.svg?style=flat-square&label=semver)](https://semver.org)
 
-Integrate [Recoil](https://github.com/recoilphp/recoil) with [ReactPHP](https://github.com/reactphp/react).
+Integrate [Recoil](https://github.com/recoilphp/recoil) with [ReactPHP](https://github.com/reactphp/reactphp).
 
     composer require recoil/react
 
