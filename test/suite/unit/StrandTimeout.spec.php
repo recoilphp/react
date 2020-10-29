@@ -9,7 +9,6 @@ use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use Recoil\Exception\TimeoutException;
 use Recoil\Kernel\Api;
-use Recoil\Kernel\Strand;
 use Recoil\Kernel\SystemStrand;
 use Throwable;
 
