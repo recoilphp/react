@@ -1,37 +1,9 @@
-SOURCE = $(shell find src test -type f)
+# PHP_COMPOSER_INSTALL_ARGS += --ignore-platform-reqs
 
-test: | vendor
-	php -c test/etc/php.ini vendor/bin/peridot
+# ################################################################################
 
-coverage: artifacts/tests/coverage/index.html
+-include .makefiles/Makefile
+-include .makefiles/pkg/php/v1/Makefile
 
-coverage-open: artifacts/tests/coverage/index.html
-	open artifacts/tests/coverage/index.html
-
-lint: $(SOURCE) | vendor
-	@mkdir -p artifacts/
-	vendor/bin/php-cs-fixer fix --allow-risky=yes
-
-prepare: lint coverage
-	composer validate
-	travis lint
-
-ci: artifacts/tests/coverage/clover.xml
-	php -c test/etc/php.ini -d zend.assertions=-1 vendor/bin/peridot
-
-.PHONY: FORCE test coverage coverage-open lint prepare ci
-
-vendor: composer.lock
-	composer install
-
-composer.lock: composer.json
-	composer update
-
-artifacts/tests/coverage/index.html: $(SOURCE) | vendor
-	phpdbg -c test/etc/php.ini -qrr vendor/bin/peridot --reporter html-code-coverage --code-coverage-path=$(@D)
-
-artifacts/tests/coverage/clover.xml: $(SOURCE) | vendor
-	phpdbg -c test/etc/php.ini -qrr vendor/bin/peridot --reporter clover-code-coverage --code-coverage-path=$@
-
-%.php: FORCE
-	@php -l $@ > /dev/null
+.makefiles/%:
+	@curl -sfL https://makefiles.dev/v1 | bash /dev/stdin "$@"
