@@ -12,11 +12,25 @@
     "eloquent/phony": "^5",
     "friendsofphp/php-cs-fixer": "^2",
     "hamcrest/hamcrest-php": "^2",
-    "peridot-php/leo": "^1",
-    "peridot-php/peridot-code-coverage-reporters": "^2",
-    "peridot-php/peridot": "^1",
-    "recoil/dev": "dev-php-8"
+    "peridot-php/leo": "dev-php-8 as 1.999.999",
+    "peridot-php/peridot": "dev-php-8 as 1.999.999",
+    "peridot-php/peridot-code-coverage-reporters": "dev-php-8 as 2.999.999",
+    "recoil/dev": "^0.4"
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/recoilphp/leo"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/recoilphp/peridot"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/recoilphp/peridot-code-coverage-reporters"
+    }
+  ],
   "autoload": {
     "psr-4": {
       "Recoil\\React\\": "src"
