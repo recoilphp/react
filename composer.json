@@ -1,54 +1,79 @@
 {
-    "name": "recoil/react",
-    "description": "Integrate Recoil with ReactPHP.",
-    "require": {
-        "php": "^7.2",
-        "react/event-loop": "^1.0 || ^0.5 || ^0.4",
-        "react/promise": "^2",
-        "recoil/api": "^1",
-        "recoil/kernel": "^1.0.2"
+  "name": "recoil/react",
+  "description": "Integrate Recoil with ReactPHP.",
+  "require": {
+    "php": ">=7.4",
+    "react/event-loop": "^1.0 || ^0.5 || ^0.4",
+    "react/promise": "^2",
+    "recoil/api": "^1.0.2",
+    "recoil/kernel": "^1"
+  },
+  "require-dev": {
+    "eloquent/phony": "^5",
+    "friendsofphp/php-cs-fixer": "^2",
+    "hamcrest/hamcrest-php": "^2",
+    "peridot-php/leo": "dev-php-8 as 1.999.999",
+    "peridot-php/peridot": "dev-php-8 as 1.999.999",
+    "peridot-php/peridot-code-coverage-reporters": "dev-php-8 as 2.999.999",
+    "recoil/dev": "^0.4"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/recoilphp/leo"
     },
-    "require-dev": {
-        "eloquent/phony": "^3.2",
-        "friendsofphp/php-cs-fixer": "^2",
-        "hamcrest/hamcrest-php": "^2",
-        "peridot-php/leo": "^1",
-        "peridot-php/peridot-code-coverage-reporters": "^2",
-        "peridot-php/peridot": "^1",
-        "recoil/dev": "^0.4"
+    {
+      "type": "vcs",
+      "url": "https://github.com/recoilphp/peridot"
     },
-    "autoload": { "psr-4": { "Recoil\\React\\": "src" } },
-    "autoload-dev": {
-        "psr-4": { "Recoil\\React\\": "test/src" },
-        "files": ["test/src/compatibility.php"]
-    },
-    "keywords": [
-        "async",
-        "asynchronous",
-        "continuation",
-        "coroutine",
-        "event",
-        "generator",
-        "green",
-        "multitasking",
-        "promise",
-        "react",
-        "react",
-        "thread"
-    ],
-    "homepage": "https://github.com/recoilphp/react",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "James Harris",
-            "email": "james.harris@icecave.com.au",
-            "homepage": "https://github.com/jmalloc"
-        }
-    ],
-    "config": {
-        "sort-packages": true,
-        "platform": {
-            "php": "7.2"
-        }
+    {
+      "type": "vcs",
+      "url": "https://github.com/recoilphp/peridot-code-coverage-reporters"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Recoil\\React\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Recoil\\React\\": "test/src"
+    },
+    "files": [
+      "test/src/compatibility.php"
+    ]
+  },
+  "keywords": [
+    "async",
+    "asynchronous",
+    "continuation",
+    "coroutine",
+    "event",
+    "generator",
+    "green",
+    "multitasking",
+    "promise",
+    "react",
+    "react",
+    "thread"
+  ],
+  "homepage": "https://github.com/recoilphp/react",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "James Harris",
+      "email": "james.harris@icecave.com.au",
+      "homepage": "https://github.com/jmalloc"
+    }
+  ],
+  "config": {
+    "sort-packages": true,
+    "platform": {
+      "php": "7.4"
+    },
+    "allow-plugins": {
+      "recoil/dev": true
+    }
+  }
 }
