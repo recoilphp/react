@@ -6,7 +6,7 @@
     "react/event-loop": "^1.0 || ^0.5 || ^0.4",
     "react/promise": "^2",
     "recoil/api": "^1.0.2",
-    "recoil/kernel": "dev-php-8"
+    "recoil/kernel": "^1"
   },
   "require-dev": {
     "eloquent/phony": "^5",

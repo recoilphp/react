@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ebc8857d9ef8eaebb3e80f46247a4850",
+    "content-hash": "0a24b24019d6ece2cb5922331f7c5f2b",
     "packages": [
         {
             "name": "icecave/repr",
@@ -276,16 +276,16 @@
         },
         {
             "name": "recoil/kernel",
-            "version": "dev-php-8",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/recoilphp/kernel.git",
-                "reference": "ea478d4e3b7303db73c681ff6b6ff1c5b966eca9"
+                "reference": "aa80bf44a25a5be5c1fa7a2bb53def27a81fc188"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/recoilphp/kernel/zipball/ea478d4e3b7303db73c681ff6b6ff1c5b966eca9",
-                "reference": "ea478d4e3b7303db73c681ff6b6ff1c5b966eca9",
+                "url": "https://api.github.com/repos/recoilphp/kernel/zipball/aa80bf44a25a5be5c1fa7a2bb53def27a81fc188",
+                "reference": "aa80bf44a25a5be5c1fa7a2bb53def27a81fc188",
                 "shasum": ""
             },
             "require": {
@@ -334,9 +334,9 @@
             ],
             "support": {
                 "issues": "https://github.com/recoilphp/kernel/issues",
-                "source": "https://github.com/recoilphp/kernel/tree/php-8"
+                "source": "https://github.com/recoilphp/kernel/tree/1.0.5"
             },
-            "time": "2022-03-06T02:42:31+00:00"
+            "time": "2022-03-06T02:46:48+00:00"
         }
     ],
     "packages-dev": [
@@ -1701,16 +1701,16 @@
         },
         {
             "name": "recoil/dev",
-            "version": "0.4.1",
+            "version": "0.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/recoilphp/dev.git",
-                "reference": "9033a40a2d79e370e71401bd9402a5775dc5e98c"
+                "reference": "7e422c97bbc6931ef4baf83b46b7fb91678fa661"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/recoilphp/dev/zipball/9033a40a2d79e370e71401bd9402a5775dc5e98c",
-                "reference": "9033a40a2d79e370e71401bd9402a5775dc5e98c",
+                "url": "https://api.github.com/repos/recoilphp/dev/zipball/7e422c97bbc6931ef4baf83b46b7fb91678fa661",
+                "reference": "7e422c97bbc6931ef4baf83b46b7fb91678fa661",
                 "shasum": ""
             },
             "require": {
@@ -1767,9 +1767,9 @@
             ],
             "support": {
                 "issues": "https://github.com/recoilphp/dev/issues",
-                "source": "https://github.com/recoilphp/dev/tree/0.4.1"
+                "source": "https://github.com/recoilphp/dev/tree/0.4.2"
             },
-            "time": "2022-03-06T02:57:49+00:00"
+            "time": "2022-03-06T04:11:59+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -3323,7 +3323,6 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "recoil/kernel": 20,
         "peridot-php/leo": 20,
         "peridot-php/peridot": 20,
         "peridot-php/peridot-code-coverage-reporters": 20
