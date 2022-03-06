@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.3 (2022-03-06)
+
+- Add support for PHP 8
+- Drop support for PHP 7.0, 7.1, 7.2 and 7.3
+
 ## 1.0.2 (2018-04-30)
 
 - **[FIX]** Handle `fwrite()` error conditions that do not produce a PHP error (thanks [@tsufeki](https://github.com/tsufeki))
